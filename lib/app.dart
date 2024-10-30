@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:t_ecommerce_admin_panel/bindings/general_binding.dart';
 import 'package:t_ecommerce_admin_panel/routes/app_routes.dart';
 import 'package:t_ecommerce_admin_panel/routes/routes.dart';
 import 'utils/constants/text_strings.dart';
@@ -18,21 +19,18 @@ class App extends StatelessWidget {
       darkTheme: TAppTheme.darkTheme,
       debugShowCheckedModeBanner: false,
       scrollBehavior: MyCustomScrollBehavior(),
+      initialBinding: GeneralBinding(),
 
       getPages: TAppRoutes.pages,
-      initialRoute: TRoutes.login,
+      initialRoute: TRoutes.dashboard,
       unknownRoute: GetPage(
-          name: '/page-not-found',
-          page: () => const Scaffold(
-              body: Center(
-                  child: Text(
-                      'Page Not Found')))), //GetPage(name: '/page-not-found', page: () => PageNotFound(),)),
-      // home: const Scaffold(
-      //   backgroundColor: TColors.primary,
-      //   body: Center(
-      //     child: CircularProgressIndicator(color: Colors.white),
-      //   ),
-      // ),
+        name: '/page-not-found',
+        page: () => const Scaffold(
+          body: Center(
+            child: Text('Page Not Found'),
+          ),
+        ),
+      ), //GetPage(name: '/page-not-found', page: () => PageNotFound(),)),
     );
   }
 }

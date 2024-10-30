@@ -1,8 +1,6 @@
 class TRoutes {
-
-
   static List sidebarMenuItems = [
-    login,
+    dashboard,
   ];
 
   static const login = '/login';

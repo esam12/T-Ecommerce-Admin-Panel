@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/layouts/templates/site_template.dart';
-import 'package:t_ecommerce_admin_panel/features/authentication/screens/dashboard/responsive_screens/dashboard_desktop.dart';
-import 'package:t_ecommerce_admin_panel/features/authentication/screens/dashboard/responsive_screens/dashboard_mobile.dart';
-import 'package:t_ecommerce_admin_panel/features/authentication/screens/dashboard/responsive_screens/dashboard_tablet.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/dashboard/responsive_screens/dashboard_desktop.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/dashboard/responsive_screens/dashboard_mobile.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/dashboard/responsive_screens/dashboard_tablet.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});

@@ -10,7 +10,7 @@ import '../loaders/animation_loader.dart';
 /// Custom PaginatedDataTable widget with additional features
 class TPaginatedDataTable extends StatelessWidget {
   const TPaginatedDataTable({
-    Key? key,
+    super.key,
     required this.columns,
     required this.source,
     this.rowsPerPage = 10,
@@ -20,7 +20,7 @@ class TPaginatedDataTable extends StatelessWidget {
     this.dataRowHeight = TSizes.xl * 2,
     this.sortAscending = true,
     this.minWidth = 1000,
-  }) : super(key: key);
+  });
 
   /// Whether to sort the DataTable in ascending or descending order.
   final bool sortAscending;
@@ -74,7 +74,7 @@ class TPaginatedDataTable extends StatelessWidget {
           onRowsPerPageChanged: (noOfRows) {},
           sortColumnIndex: sortColumnIndex,
           headingTextStyle: Theme.of(context).textTheme.titleMedium,
-          headingRowColor: MaterialStateProperty.resolveWith((states) => TColors.primaryBackground),
+          headingRowColor: WidgetStateProperty.resolveWith((states) => TColors.primaryBackground),
           empty: TAnimationLoaderWidget(animation: TImages.packageAnimation, text: 'Nothing Found', height: 200, width: 200),
           headingRowDecoration: const BoxDecoration(
             borderRadius: BorderRadius.only(

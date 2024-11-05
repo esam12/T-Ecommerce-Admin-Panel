@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/dashboard/table/data_table.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/dashboard/widgets/dashboard_card.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/dashboard/widgets/order_status_pie_chart.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/dashboard/widgets/weekly_sales_graph.dart';
@@ -67,7 +68,18 @@ class DashboardTablet extends StatelessWidget {
               const SizedBox(height: TSizes.spaceBtwSections),
 
               /// Orders
-              const TRoundedContainer(),
+              TRoundedContainer(
+                child: Column(
+                  children: [
+                    Text(
+                      'Recent Orders',
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    const SizedBox(height: TSizes.spaceBtwSections),
+                    const DashboardOrderTable(),
+                  ],
+                ),
+              ),
               const SizedBox(height: TSizes.spaceBtwSections),
 
               /// Pie Chart

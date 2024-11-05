@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/dashboard/table/data_table.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/dashboard/widgets/dashboard_card.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/dashboard/widgets/order_status_pie_chart.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/dashboard/widgets/weekly_sales_graph.dart';
@@ -58,7 +59,7 @@ class DashboardDesktop extends StatelessWidget {
               const SizedBox(height: TSizes.spaceBtwSections),
 
               /// Graphs
-              const Row(
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
@@ -66,19 +67,31 @@ class DashboardDesktop extends StatelessWidget {
                     child: Column(
                       children: [
                         /// Bar Graph
-                        TWeeklySalesGraph(),
+                        const TWeeklySalesGraph(),
 
-                        SizedBox(height: TSizes.spaceBtwSections),
+                        const SizedBox(height: TSizes.spaceBtwSections),
 
                         /// Orders
-                        TRoundedContainer(),
+                        TRoundedContainer(
+                          child: Column(
+                            children: [
+                              Text(
+                                'Recent Orders',
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall,
+                              ),
+                              const SizedBox(height: TSizes.spaceBtwSections),
+                              const DashboardOrderTable(),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                  SizedBox(width: TSizes.spaceBtwItems),
+                  const SizedBox(width: TSizes.spaceBtwItems),
 
                   /// Pie Chart
-                  Expanded(
+                  const Expanded(
                     child: OrderStatusPieChart(),
                   ),
                 ],

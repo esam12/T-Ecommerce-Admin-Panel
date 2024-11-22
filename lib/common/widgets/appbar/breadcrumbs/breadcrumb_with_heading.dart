@@ -4,6 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/texts/page_heading.dart';
 import 'package:t_ecommerce_admin_panel/routes/routes.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
+import 'package:t_ecommerce_admin_panel/utils/helpers/helper_functions.dart';
 
 class TBreadcrumbWithHeading extends StatelessWidget {
   const TBreadcrumbWithHeading({
@@ -51,7 +52,7 @@ class TBreadcrumbWithHeading extends StatelessWidget {
                     child: Text(
                       i == breadcrumbItems.length - 1
                           ? breadcrumbItems[i].capitalize.toString()
-                          : capitalize(
+                          : THelperFunctions.capitalize(
                               breadcrumbItems[i].substring(1),
                             ),
                       style: Theme.of(context).textTheme.bodySmall!.apply(
@@ -80,8 +81,4 @@ class TBreadcrumbWithHeading extends StatelessWidget {
       ],
     );
   }
-
-  // Function to capitalize the first letter of a string
-  String capitalize(String s) =>
-      s.isEmpty ? '' : s[0].toUpperCase() + s.substring(1);
 }

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/appbar/breadcrumbs/breadcrumb_with_heading.dart';
+import 'package:t_ecommerce_admin_panel/features/media/controllers/media_controller.dart';
+import 'package:t_ecommerce_admin_panel/features/media/screens/media/widgets/media_content.dart';
+import 'package:t_ecommerce_admin_panel/features/media/screens/media/widgets/media_uploader.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
 
 class MediaDesktopScreen extends StatelessWidget {
@@ -8,6 +12,7 @@ class MediaDesktopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(MediaController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -28,7 +33,8 @@ class MediaDesktopScreen extends StatelessWidget {
                   SizedBox(
                     width: TSizes.buttonWidth * 1.5,
                     child: ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () => controller.showImagesUploaderSection
+                          .value = !controller.showImagesUploaderSection.value,
                       icon: const Icon(Iconsax.cloud_add),
                       label: const Text('Upload Images'),
                     ),
@@ -38,8 +44,10 @@ class MediaDesktopScreen extends StatelessWidget {
               const SizedBox(height: TSizes.spaceBtwSections),
 
               /// Upload Area
+              const MediaUploader(),
 
               /// Media
+              const MediaContent(),
             ],
           ),
         ),

@@ -3,7 +3,7 @@ import 'package:t_ecommerce_admin_panel/routes/routes.dart';
 import 'package:t_ecommerce_admin_panel/utils/device/device_utility.dart';
 
 class SidebarController extends GetxController {
-  final activteItem = TRoutes.login.obs;
+  final activteItem = TRoutes.dashboard.obs;
   final hoverItem = ''.obs;
 
   void changeActiveItem(String route) => activteItem.value = route;

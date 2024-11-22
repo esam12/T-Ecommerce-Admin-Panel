@@ -1,13 +1,14 @@
 class TRoutes {
-  static List sidebarMenuItems = [
-    dashboard,
-  ];
-
   static const login = '/login';
   static const forgetPassword = '/forgetPassword';
   static const resetPassword = '/resetPassword';
   static const dashboard = '/dashboard';
-  // static const media = '/media';
+  static const media = '/media';
+
+  static List sidebarMenuItems = [
+    dashboard,
+    media,
+  ];
 
   // static const banners = '/banners';
   // static const createBanner = '/createBanner';

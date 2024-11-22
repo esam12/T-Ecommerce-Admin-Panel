@@ -48,17 +48,12 @@ class TSidebar extends StatelessWidget {
                     const TMenuItem(
                       title: 'Dashboard',
                       icon: Iconsax.status,
-                      route: TRoutes.resetPassword,
+                      route: TRoutes.dashboard,
                     ),
                     const TMenuItem(
                       title: 'Media',
                       icon: Iconsax.image,
-                      route: TRoutes.login,
-                    ),
-                    const TMenuItem(
-                      title: 'Banners',
-                      icon: Iconsax.picture_frame,
-                      route: TRoutes.forgetPassword,
+                      route: TRoutes.media,
                     ),
                   ],
                 ),

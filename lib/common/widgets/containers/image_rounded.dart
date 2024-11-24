@@ -9,7 +9,7 @@ import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
 class TRoundedImage extends StatelessWidget {
   const TRoundedImage({
     super.key,
-    required this.imagetType,
+    required this.imageType,
     this.width = 56,
     this.height = 56,
     required this.image,
@@ -31,7 +31,7 @@ class TRoundedImage extends StatelessWidget {
   final String? image;
   final BoxFit? fit;
   final File? file;
-  final ImageType imagetType;
+  final ImageType imageType;
   final Color? backgroundColor;
   final Color? overlayColor;
   final Uint8List? memoryImage;
@@ -56,7 +56,7 @@ class TRoundedImage extends StatelessWidget {
   Widget _buildImageWidget() {
     Widget imageWidget;
 
-    switch (imagetType) {
+    switch (imageType) {
       case ImageType.network:
         imageWidget = _buildNetworkImage();
         break;

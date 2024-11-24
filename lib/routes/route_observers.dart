@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-import 'package:get/get.dart';
-
-class RouteObservers extends GetObserver {
-
-  
-
-}
-=======
 import 'package:flutter/src/widgets/navigator.dart';
 import 'package:get/get.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/layouts/sidebars/sidebar_controller.dart';
@@ -27,4 +18,3 @@ class RouteObservers extends GetObserver {
     }
   }
 }
->>>>>>> master

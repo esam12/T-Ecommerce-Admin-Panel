@@ -36,6 +36,7 @@ class MediaContent extends StatelessWidget {
               )
             ],
           ),
+          
 
           /// Show Media
           const SizedBox(height: TSizes.spaceBtwItems),

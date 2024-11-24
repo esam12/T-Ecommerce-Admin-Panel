@@ -17,7 +17,11 @@ dependencies:
   clipboard: ^0.1.3
   image_picker: ^1.0.4
   url_launcher: ^6.2.1
+<<<<<<< HEAD
   flutter_dropzone: ^3.0.7
+=======
+  flutter_dropzone: ^4.2.1
+>>>>>>> master
   flutter_typeahead: ^5.2.0
   connectivity_plus: ^5.0.1
   multi_select_flutter: ^4.1.3
@@ -30,9 +34,16 @@ dependencies:
   web: ^0.5.1
   http: ^1.1.2
   html: ^0.15.4
+<<<<<<< HEAD
   fl_chart: ^0.68.0
   data_table_2: ^2.5.15
   url_strategy: ^0.3.0
+=======
+  fl_chart: ^0.69.0
+  data_table_2: ^2.5.15
+  url_strategy: ^0.3.0
+  universal_html: ^2.2.4
+>>>>>>> master
 
   # Icons
   iconsax: ^0.0.8

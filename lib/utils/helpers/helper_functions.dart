@@ -5,11 +5,19 @@ import 'package:intl/intl.dart';
 import '../constants/enums.dart';
 
 class THelperFunctions {
+<<<<<<< HEAD
 
   static DateTime getStartOfWeek(DateTime date) {
     final int daysUntilMonday = date.weekday - 1;
     final DateTime startOfWeek = date.subtract(Duration(days: daysUntilMonday));
     return DateTime(startOfWeek.year, startOfWeek.month, startOfWeek.day, 0, 0, 0, 0, 0);
+=======
+  static DateTime getStartOfWeek(DateTime date) {
+    final int daysUntilMonday = date.weekday - 1;
+    final DateTime startOfWeek = date.subtract(Duration(days: daysUntilMonday));
+    return DateTime(
+        startOfWeek.year, startOfWeek.month, startOfWeek.day, 0, 0, 0, 0, 0);
+>>>>>>> master
   }
 
   static Color getOrderStatusColor(OrderStatus value) {
@@ -119,7 +127,12 @@ class THelperFunctions {
     return MediaQuery.of(Get.context!).size.width;
   }
 
+<<<<<<< HEAD
   static String getFormattedDate(DateTime date, {String format = 'dd MMM yyyy'}) {
+=======
+  static String getFormattedDate(DateTime date,
+      {String format = 'dd MMM yyyy'}) {
+>>>>>>> master
     return DateFormat(format).format(date);
   }
 
@@ -130,9 +143,21 @@ class THelperFunctions {
   static List<Widget> wrapWidgets(List<Widget> widgets, int rowSize) {
     final wrappedList = <Widget>[];
     for (var i = 0; i < widgets.length; i += rowSize) {
+<<<<<<< HEAD
       final rowChildren = widgets.sublist(i, i + rowSize > widgets.length ? widgets.length : i + rowSize);
+=======
+      final rowChildren = widgets.sublist(
+          i, i + rowSize > widgets.length ? widgets.length : i + rowSize);
+>>>>>>> master
       wrappedList.add(Row(children: rowChildren));
     }
     return wrappedList;
   }
+<<<<<<< HEAD
+=======
+
+  // Function to capitalize the first letter of a string
+  static String capitalize(String s) =>
+      s.isEmpty ? '' : s[0].toUpperCase() + s.substring(1);
+>>>>>>> master
 }

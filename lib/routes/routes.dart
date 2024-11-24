@@ -1,4 +1,5 @@
 class TRoutes {
+<<<<<<< HEAD
   static const firstScreen = '/';
 
   static const secondScreen = '/second-screen/';
@@ -9,6 +10,18 @@ class TRoutes {
   // static const resetPassword = '/resetPassword';
   // static const dashboard = '/dashboard';
   // static const media = '/media';
+=======
+  static const login = '/login';
+  static const forgetPassword = '/forgetPassword';
+  static const resetPassword = '/resetPassword';
+  static const dashboard = '/dashboard';
+  static const media = '/media';
+
+  static List sidebarMenuItems = [
+    dashboard,
+    media,
+  ];
+>>>>>>> master
 
   // static const banners = '/banners';
   // static const createBanner = '/createBanner';

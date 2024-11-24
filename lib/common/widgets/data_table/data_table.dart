@@ -6,10 +6,17 @@ import '../../../utils/constants/sizes.dart';
 
 class TDataTable extends StatelessWidget {
   const TDataTable({
+<<<<<<< HEAD
     Key? key,
     required this.columns,
     required this.rows,
   }) : super(key: key);
+=======
+    super.key,
+    required this.columns,
+    required this.rows,
+  });
+>>>>>>> master
 
   /// List of columns for the data table
   final List<DataColumn> columns;
@@ -34,7 +41,11 @@ class TDataTable extends StatelessWidget {
         // Set the horizontal margin of the data table
         horizontalMargin: 12,
         // Set the color of the heading row
+<<<<<<< HEAD
         headingRowColor: MaterialStateProperty.resolveWith((states) => TColors.primary),
+=======
+        headingRowColor: WidgetStateProperty.resolveWith((states) => TColors.primary),
+>>>>>>> master
         // Set the decoration for the data table
         decoration: const BoxDecoration(
           color: Colors.white,

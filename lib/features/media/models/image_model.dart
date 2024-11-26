@@ -18,7 +18,7 @@ class ImageModel {
   final String? contentType;
 
   // Not Mapped
-  final String? file;
+  final Uint8List? file;
   RxBool isSelected = false.obs;
   final Uint8List? localImageToDisplay;
 

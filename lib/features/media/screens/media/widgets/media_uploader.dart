@@ -38,7 +38,7 @@ class MediaUploader extends StatelessWidget {
                           alignment: Alignment.center,
                           children: [
                             DropzoneView(
-                              mime: ['image/jpeg', 'image/png'],
+                              mime: const ['image/jpeg', 'image/png'],
                               cursor: CursorType.Default,
                               operation: DragOperation.copy,
                               onLoaded: () => print('Zone Loaded'),
@@ -57,7 +57,7 @@ class MediaUploader extends StatelessWidget {
                                     .getFileData(file);
                                 final image = ImageModel(
                                   url: '',
-                                  file: file.name,
+                                  file: bytes,
                                   folder: '',
                                   filename: file.name,
                                   localImageToDisplay:
@@ -135,7 +135,8 @@ class MediaUploader extends StatelessWidget {
                                         width: TSizes.buttonWidth,
                                         child: ElevatedButton(
                                           onPressed: () {
-                                           // controller.uploadImagesConfirmation();
+                                            controller
+                                                .uploadImagesConfirmation();
                                           },
                                           child: const Text('Upload'),
                                         ),

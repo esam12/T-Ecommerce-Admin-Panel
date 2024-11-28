@@ -18,6 +18,10 @@ import 'package:t_ecommerce_admin_panel/utils/popups/loaders.dart';
 class MediaController extends GetxController {
   static MediaController get instance => Get.find();
 
+  final RxBool loading = false.obs;
+  final int initialLoadCount = 20;
+  final int loadMoreCount = 25;
+
   late DropzoneViewController dropzoneViewController;
   final RxBool showImagesUploaderSection = false.obs;
   final Rx<MediaCategory> selectedPath = MediaCategory.folders.obs;
@@ -30,6 +34,87 @@ class MediaController extends GetxController {
   final RxList<ImageModel> allCategoryImages = <ImageModel>[].obs;
   final RxList<ImageModel> allUserImages = <ImageModel>[].obs;
   final MediaRepository mediaRepository = MediaRepository();
+
+  // Get Images
+  void getMediaImages() async {
+    try {
+      loading.value = true;
+
+      RxList<ImageModel> targetList = <ImageModel>[].obs;
+
+      if (selectedPath.value == MediaCategory.banners &&
+          allBannerImages.isEmpty) {
+        targetList = allBannerImages;
+      } else if (selectedPath.value == MediaCategory.products &&
+          allProductImages.isEmpty) {
+        targetList = allProductImages;
+      } else if (selectedPath.value == MediaCategory.brands &&
+          allBrandImages.isEmpty) {
+        targetList = allBrandImages;
+      } else if (selectedPath.value == MediaCategory.categories &&
+          allCategoryImages.isEmpty) {
+        targetList = allCategoryImages;
+      } else if (selectedPath.value == MediaCategory.users &&
+          allUserImages.isEmpty) {
+        targetList = allUserImages;
+      }
+
+      final images = await mediaRepository.fetchImagesFromDatabase(
+        selectedPath.value,
+        initialLoadCount,
+      );
+      targetList.assignAll(images);
+
+      loading.value = false;
+    } catch (e) {
+      loading.value = false;
+      TLoaders.errorSnackBar(
+          title: 'Oh Snap!',
+          message:
+              'Unable to fetch Images, Something went wrong. Please try again later');
+    }
+  }
+
+  // Load More Images
+  void loadMoreMediaImages() async {
+    try {
+      loading.value = true;
+
+      RxList<ImageModel> targetList = <ImageModel>[].obs;
+
+      if (selectedPath.value == MediaCategory.banners &&
+          allBannerImages.isEmpty) {
+        targetList = allBannerImages;
+      } else if (selectedPath.value == MediaCategory.products &&
+          allProductImages.isEmpty) {
+        targetList = allProductImages;
+      } else if (selectedPath.value == MediaCategory.brands &&
+          allBrandImages.isEmpty) {
+        targetList = allBrandImages;
+      } else if (selectedPath.value == MediaCategory.categories &&
+          allCategoryImages.isEmpty) {
+        targetList = allCategoryImages;
+      } else if (selectedPath.value == MediaCategory.users &&
+          allUserImages.isEmpty) {
+        targetList = allUserImages;
+      }
+
+      final images = await mediaRepository.loadMoreImagesFromDatabase(
+        selectedPath.value,
+        initialLoadCount,
+        targetList.last.createdAt ?? DateTime.now(),
+      );
+      targetList.addAll(images);
+
+      loading.value = false;
+    } catch (e) {
+      loading.value = false;
+      TLoaders.errorSnackBar(
+          title: 'Oh Snap!',
+          message:
+              'Unable to fetch Images, Something went wrong. Please try again later');
+    }
+  }
 
   Future<void> selectedLocalImages() async {
     final List<dynamic> files = await dropzoneViewController

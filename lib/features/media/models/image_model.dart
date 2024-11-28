@@ -80,6 +80,31 @@ class ImageModel {
     }
   }
 
+  /// Convert Firestore Json and Map on Model
+  factory ImageModel.fromSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> document) {
+    if (document.data() != null) {
+      final data = document.data()!;
+      // Map Json Record to the Model
+      return ImageModel(
+        id: document.id,
+        url: data['url'] ?? '',
+        folder: data['folder'] ?? '',
+        sizeBytes: data['sizeBytes'] ?? 0,
+        mediaCategory: data['mediaCategory'] ?? '',
+        filename: data['filename'] ?? '',
+        fullPath: data['fullPath'] ?? '',
+        createdAt:
+            data.containsKey('createdAt') ? data['createdAt'].toDate() : null,
+        updatedAt:
+            data.containsKey('updatedAt') ? data['updatedAt'].toDate() : null,
+        contentType: data['contentType'] ?? '',
+      );
+    } else {
+      return ImageModel.empty();
+    }
+  }
+
   /// Map Firebase Storage Data
   factory ImageModel.fromFirebaseMetadata(
     FullMetadata metadata,

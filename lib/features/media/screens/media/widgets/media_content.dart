@@ -8,6 +8,7 @@ import 'package:t_ecommerce_admin_panel/common/widgets/loaders/loader_animation.
 import 'package:t_ecommerce_admin_panel/features/media/controllers/media_controller.dart';
 import 'package:t_ecommerce_admin_panel/features/media/models/image_model.dart';
 import 'package:t_ecommerce_admin_panel/features/media/screens/media/widgets/folder_dropdown.dart';
+import 'package:t_ecommerce_admin_panel/features/media/screens/media/widgets/view_image_details.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/colors.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/image_strings.dart';
@@ -68,7 +69,9 @@ class MediaContent extends StatelessWidget {
                     children: images
                         .map(
                           (image) => GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Get.dialog(ImagePopup(imageModel: image));
+                            },
                             child: SizedBox(
                               width: 140,
                               height: 180,

@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:get/get.dart';
+import 'package:t_ecommerce_admin_panel/common/widgets/loaders/circular_loader.dart';
 import 'package:t_ecommerce_admin_panel/data/repositories/media/media_repository.dart';
 
 import 'package:t_ecommerce_admin_panel/features/media/models/image_model.dart';
@@ -268,5 +269,81 @@ class MediaController extends GetxController {
         path = 'Others';
     }
     return path;
+  }
+
+  /// Popup Confirmation to remove cloud image
+  void removeCloudImageConfirmation(ImageModel image) {
+    // Delete Confirmation
+    TDialogs.defaultDialog(
+      context: Get.context!,
+      content: 'Are you sure you want to delete this image?',
+      confirmText: 'Delete',
+      onConfirm: () {
+        // Close the previous dialog image popup
+        Get.back();
+        removeCloudImage(image);
+      },
+    );
+  }
+
+  void removeCloudImage(ImageModel image) async {
+    try {
+      // Close the removeCloudImageConfirmation() dialog
+      Get.back();
+
+      // Show Loader
+      Get.defaultDialog(
+        title: '',
+        barrierDismissible: false,
+        backgroundColor: Colors.transparent,
+        content: const PopScope(
+          child:
+              SizedBox(width: 150.0, height: 150.0, child: TCircularLoader()),
+        ),
+      );
+
+      // Delete image
+      await mediaRepository.deleteFileFromStorage(image);
+
+      // Get the corresponding list to update
+      RxList<ImageModel> targetList;
+
+      // Check the selected category and update the corresponding list
+      switch (selectedPath.value) {
+        case MediaCategory.banners:
+          targetList = allBannerImages;
+          break;
+        case MediaCategory.brands:
+          targetList = allBrandImages;
+          break;
+        case MediaCategory.categories:
+          targetList = allCategoryImages;
+          break;
+        case MediaCategory.products:
+          targetList = allProductImages;
+          break;
+        case MediaCategory.users:
+          targetList = allUserImages;
+          break;
+        default:
+          return;
+      }
+
+      // Remove from the list
+      targetList.remove(image);
+
+      update();
+
+      TFullScreenLoader.stopLoading();
+      TLoaders.successSnackBar(
+          title: 'Image Deleted',
+          message: 'Image Successfully Deleted From Your Cloud Storage');
+    } catch (e) {
+      TFullScreenLoader.stopLoading();
+      TLoaders.errorSnackBar(
+        title: 'Oh Snap!',
+        message: e.toString(),
+      );
+    }
   }
 }

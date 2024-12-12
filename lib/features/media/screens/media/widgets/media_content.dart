@@ -31,6 +31,7 @@ class MediaContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool loadedPreviousSelection = false;
     final controller = MediaController.instance;
     return TRoundedContainer(
       child: Column(
@@ -68,22 +69,30 @@ class MediaContent extends StatelessWidget {
               // Get Selected Folder Images
               List<ImageModel> images = _getSelectedFolderImages(controller);
 
-              if (alreadySelectedUrls != null &&
-                  alreadySelectedUrls!.isNotEmpty) {
-                // Convert alreadySelectedUrls to a Set for faster lookup
-                final selectedUrlsSet = Set<String>.from(alreadySelectedUrls!);
+              // Load Selected Images from the Already Selected Images Only once otherwise
+              // on Obx() rebuild UI first images will be selected then will auto unCheck.
 
-                for (var image in images) {
-                  image.isSelected.value = selectedUrlsSet.contains(image.url);
-                  if (image.isSelected.value) {
-                    selectedImages.add(image);
+              if (!loadedPreviousSelection) {
+                if (alreadySelectedUrls != null &&
+                    alreadySelectedUrls!.isNotEmpty) {
+                  // Convert alreadySelectedUrls to a Set for faster lookup
+                  final selectedUrlsSet =
+                      Set<String>.from(alreadySelectedUrls!);
+
+                  for (var image in images) {
+                    image.isSelected.value =
+                        selectedUrlsSet.contains(image.url);
+                    if (image.isSelected.value) {
+                      selectedImages.add(image);
+                    }
+                  }
+                } else {
+                  // if alreadySelectedUrls is null or empty, set all images to not selected
+                  for (var image in images) {
+                    image.isSelected.value = false;
                   }
                 }
-              } else {
-                // if alreadySelectedUrls is null or empty, set all images to not selected
-                for (var image in images) {
-                  image.isSelected.value = false;
-                }
+                loadedPreviousSelection = true;
               }
 
               // Loader

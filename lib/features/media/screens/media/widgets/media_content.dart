@@ -40,6 +40,7 @@ class MediaContent extends StatelessWidget {
           const SizedBox(height: TSizes.spaceBtwSections),
 
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
@@ -66,6 +67,24 @@ class MediaContent extends StatelessWidget {
             () {
               // Get Selected Folder Images
               List<ImageModel> images = _getSelectedFolderImages(controller);
+
+              if (alreadySelectedUrls != null &&
+                  alreadySelectedUrls!.isNotEmpty) {
+                // Convert alreadySelectedUrls to a Set for faster lookup
+                final selectedUrlsSet = Set<String>.from(alreadySelectedUrls!);
+
+                for (var image in images) {
+                  image.isSelected.value = selectedUrlsSet.contains(image.url);
+                  if (image.isSelected.value) {
+                    selectedImages.add(image);
+                  }
+                }
+              } else {
+                // if alreadySelectedUrls is null or empty, set all images to not selected
+                for (var image in images) {
+                  image.isSelected.value = false;
+                }
+              }
 
               // Loader
               if (controller.loading.value && images.isEmpty) {

@@ -8,6 +8,9 @@ import 'package:t_ecommerce_admin_panel/common/widgets/loaders/circular_loader.d
 import 'package:t_ecommerce_admin_panel/data/repositories/media/media_repository.dart';
 
 import 'package:t_ecommerce_admin_panel/features/media/models/image_model.dart';
+import 'package:t_ecommerce_admin_panel/features/media/screens/media/widgets/media_content.dart';
+import 'package:t_ecommerce_admin_panel/features/media/screens/media/widgets/media_uploader.dart';
+import 'package:t_ecommerce_admin_panel/utils/constants/colors.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/image_strings.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
@@ -353,6 +356,32 @@ class MediaController extends GetxController {
     bool allowSelection = true,
     bool multipleSelection = false,
   }) async {
-    
+    showImagesUploaderSection.value = true;
+
+    List<ImageModel>? selectedImages = await Get.bottomSheet<List<ImageModel>>(
+      isScrollControlled: true,
+      backgroundColor: TColors.primaryBackground,
+      FractionallySizedBox(
+        heightFactor: 1.0,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(
+              TSizes.defaultSpace,
+            ),
+            child: Column(
+              children: [
+                const MediaUploader(),
+                MediaContent(
+                  allowSelection: allowSelection,
+                  allowMultipleSelection: multipleSelection,
+                  alreadySelectedUrls: selectedUrls ?? [],
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    return selectedImages;
   }
 }

@@ -15,7 +15,19 @@ import 'package:t_ecommerce_admin_panel/utils/constants/image_strings.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
 
 class MediaContent extends StatelessWidget {
-  const MediaContent({super.key});
+  MediaContent({
+    super.key,
+    required this.allowSelection,
+    required this.allowMultipleSelection,
+    this.alreadySelectedUrls,
+    this.onImagesSelected,
+  });
+
+  final bool allowSelection;
+  final bool allowMultipleSelection;
+  final List<String>? alreadySelectedUrls;
+  final List<ImageModel> selectedImages = [];
+  final Function(List<ImageModel> selectedImages)? onImagesSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -29,17 +41,22 @@ class MediaContent extends StatelessWidget {
 
           Row(
             children: [
-              Text("Select Folder",
-                  style: Theme.of(context).textTheme.headlineSmall),
-              const SizedBox(width: TSizes.spaceBtwItems),
-              MediaFolderDropdown(
-                onChanged: (MediaCategory? newValue) {
-                  if (newValue != null) {
-                    controller.selectedPath.value = newValue;
-                    controller.getMediaImages();
-                  }
-                },
-              )
+              Row(
+                children: [
+                  Text("Select Folder",
+                      style: Theme.of(context).textTheme.headlineSmall),
+                  const SizedBox(width: TSizes.spaceBtwItems),
+                  MediaFolderDropdown(
+                    onChanged: (MediaCategory? newValue) {
+                      if (newValue != null) {
+                        controller.selectedPath.value = newValue;
+                        controller.getMediaImages();
+                      }
+                    },
+                  )
+                ],
+              ),
+              if (allowSelection) buildAddSelectedImagesButton()
             ],
           ),
 
@@ -77,7 +94,9 @@ class MediaContent extends StatelessWidget {
                               height: 180,
                               child: Column(
                                 children: [
-                                  _buildSimpleList(image),
+                                  allowSelection
+                                      ? _buildListWithCheckBox(image)
+                                      : _buildSimpleList(image),
                                   Expanded(
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
@@ -173,6 +192,78 @@ class MediaContent extends StatelessWidget {
       image: image.url,
       margin: TSizes.spaceBtwItems / 2,
       backgroundColor: TColors.primaryBackground,
+    );
+  }
+
+  Widget _buildListWithCheckBox(ImageModel image) {
+    return Stack(
+      children: [
+        TRoundedImage(
+          width: 140,
+          height: 140,
+          padding: TSizes.sm,
+          imageType: ImageType.network,
+          image: image.url,
+          margin: TSizes.spaceBtwItems / 2,
+          backgroundColor: TColors.primaryBackground,
+        ),
+        Positioned(
+          top: TSizes.md,
+          right: TSizes.md,
+          child: Obx(
+            () => Checkbox(
+              value: image.isSelected.value,
+              onChanged: (selected) {
+                if (selected != null) {
+                  image.isSelected.value = selected;
+
+                  if (selected) {
+                    if (!allowMultipleSelection) {
+                      // if multiple selection is not allowed, uncheck other checkboxes
+                      for (var otherImage in selectedImages) {
+                        if (otherImage != image) {
+                          otherImage.isSelected.value = false;
+                        }
+                      }
+                      selectedImages.clear();
+                    }
+                    selectedImages.add(image);
+                  } else {
+                    selectedImages.remove(image);
+                  }
+                }
+              },
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget buildAddSelectedImagesButton() {
+    return Row(
+      children: [
+        // Close Button
+        SizedBox(
+          width: 120,
+          child: OutlinedButton.icon(
+            onPressed: () => Get.back(),
+            label: const Text('Close'),
+            icon: const Icon(Iconsax.close_circle),
+          ),
+        ),
+        const SizedBox(width: TSizes.spaceBtwItems),
+
+        // Add Button
+        SizedBox(
+          width: 120,
+          child: ElevatedButton.icon(
+            onPressed: () => Get.back(result: selectedImages),
+            label: const Text('Add'),
+            icon: const Icon(Iconsax.image),
+          ),
+        )
+      ],
     );
   }
 }

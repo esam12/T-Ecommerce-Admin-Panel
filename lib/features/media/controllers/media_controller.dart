@@ -346,4 +346,13 @@ class MediaController extends GetxController {
       );
     }
   }
+
+  // Images Selection Bottom Sheet
+  Future<List<ImageModel>?> selectImagesFromMedia({
+    List<String>? selectedUrls,
+    bool allowSelection = true,
+    bool multipleSelection = false,
+  }) async {
+    
+  }
 }

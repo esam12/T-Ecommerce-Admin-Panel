@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:t_ecommerce_admin_panel/features/media/screens/media.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/category/all_categories/categories.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/category/create_category/create_category.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/category/edit_category/edit_category.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/dashboard/dashboard_screen.dart';
 import 'package:t_ecommerce_admin_panel/features/authentication/screens/forget_password/forget_password_screen.dart';
 import 'package:t_ecommerce_admin_panel/features/authentication/screens/login/login_screen.dart';
@@ -41,12 +43,12 @@ class TAppRoutes {
     ),
     GetPage(
       name: TRoutes.createCategory,
-      page: () => const CategoriesScreen(),
+      page: () => const CreateCategoryScreen(),
       middlewares: [TRouteMiddleware()],
     ),
     GetPage(
       name: TRoutes.editCategory,
-      page: () => const CategoriesScreen(),
+      page: () => const EditCategoryScreen(),
       middlewares: [TRouteMiddleware()],
     ),
   ];

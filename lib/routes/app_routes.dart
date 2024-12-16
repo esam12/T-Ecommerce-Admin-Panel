@@ -51,5 +51,7 @@ class TAppRoutes {
       page: () => const EditCategoryScreen(),
       middlewares: [TRouteMiddleware()],
     ),
+
+    // Brands
   ];
 }

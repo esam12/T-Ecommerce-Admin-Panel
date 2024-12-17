@@ -63,7 +63,7 @@ class TSidebar extends StatelessWidget {
                     const TMenuItem(
                       title: 'Brands',
                       icon: Iconsax.dcube,
-                      route: TRoutes.categories,
+                      route: TRoutes.brands,
                     ),
                     const TMenuItem(
                       title: 'Logout',

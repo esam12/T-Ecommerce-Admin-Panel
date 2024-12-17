@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:t_ecommerce_admin_panel/features/media/screens/media.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/brand/all_brands/brands.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/category/all_categories/categories.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/category/create_category/create_category.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/category/edit_category/edit_category.dart';
@@ -53,5 +54,10 @@ class TAppRoutes {
     ),
 
     // Brands
+    GetPage(
+      name: TRoutes.brands,
+      page: () => const BrandsScreen(),
+      middlewares: [TRouteMiddleware()],
+    ),
   ];
 }

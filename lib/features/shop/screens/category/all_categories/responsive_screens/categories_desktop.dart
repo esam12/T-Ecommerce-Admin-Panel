@@ -37,7 +37,6 @@ class CategoriesDesktop extends StatelessWidget {
                     TTableHeader(
                       buttonText: 'Create New Category',
                       onPressed: () => Get.toNamed(TRoutes.createCategory),
-
                     ),
                     const SizedBox(height: TSizes.spaceBtwItems),
 

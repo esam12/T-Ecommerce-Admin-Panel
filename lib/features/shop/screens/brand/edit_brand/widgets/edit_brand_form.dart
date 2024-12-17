@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:t_ecommerce_admin_panel/common/widgets/chips/rounded_choice_chips.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/images/image_uploader.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/enums.dart';
@@ -7,8 +8,8 @@ import 'package:t_ecommerce_admin_panel/utils/constants/image_strings.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:t_ecommerce_admin_panel/utils/validators/validation.dart';
 
-class CreateCategoryForm extends StatelessWidget {
-  const CreateCategoryForm({super.key});
+class EditBrandForm extends StatelessWidget {
+  const EditBrandForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class CreateCategoryForm extends StatelessWidget {
           children: [
             // Heading
             const SizedBox(height: TSizes.sm),
-            Text('Create New Category',
+            Text('Update Brand',
                 style: Theme.of(context).textTheme.headlineMedium),
             const SizedBox(height: TSizes.spaceBtwSections),
 
@@ -29,33 +30,47 @@ class CreateCategoryForm extends StatelessWidget {
             TextFormField(
               validator: (value) => TValidator.validateEmptyText('Name', value),
               decoration: const InputDecoration(
-                labelText: 'Category Name',
+                labelText: 'Brand Name',
                 prefixIcon: Icon(
-                  Iconsax.category,
+                  Iconsax.box,
                 ),
               ),
             ),
             const SizedBox(height: TSizes.spaceBtwInputFields),
 
-            DropdownButtonFormField(
-              decoration: const InputDecoration(
-                hintText: 'Parent Category',
-                labelText: 'Parent Category',
-                prefixIcon: Icon(Iconsax.bezier),
-              ),
-              items: const [
-                DropdownMenuItem(
-                  value: '',
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [Text('item.name')],
+            // Categories
+            Text('Select Categories',
+                style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: TSizes.spaceBtwInputFields / 2),
+            Wrap(
+              spacing: TSizes.sm,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: TSizes.sm,
                   ),
-                )
+                  child: TChoiceChip(
+                    text: 'Shoes',
+                    selected: true,
+                    onSelected: (value) {},
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: TSizes.sm,
+                  ),
+                  child: TChoiceChip(
+                    text: 'Track Suits',
+                    selected: false,
+                    onSelected: (value) {},
+                  ),
+                ),
               ],
-              onChanged: (newValue) {},
             ),
 
             const SizedBox(height: TSizes.spaceBtwInputFields * 2),
+
+            // Image Uploader & Featured Checkbox
             TImageUploader(
               width: 80,
               height: 80,
@@ -76,7 +91,7 @@ class CreateCategoryForm extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {},
-                child: const Text('Create'),
+                child: const Text('Update'),
               ),
             ),
 

@@ -22,6 +22,7 @@ Future<void> main() async {
     (_) => Get.put(
       AuthenticationRepository(),
     ),
+    
   );
   // Main App Starts here...
   runApp(const App());

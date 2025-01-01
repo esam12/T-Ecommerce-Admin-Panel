@@ -34,30 +34,39 @@ class TBreadcrumbWithHeading extends StatelessWidget {
             // Dashboard Link
             InkWell(
               onTap: () => Get.offAllNamed(TRoutes.dashboard),
-              child: Text(
-                'Dashboard',
-                style: Theme.of(context).textTheme.bodySmall!.apply(
-                      fontWeightDelta: -1,
-                    ),
+              child: Padding(
+                padding: const EdgeInsets.all(TSizes.xs),
+                child: Text(
+                  'Dashboard',
+                  style: Theme.of(context).textTheme.bodySmall!.apply(
+                        fontWeightDelta: -1,
+                      ),
+                ),
               ),
             ),
 
             for (int i = 0; i < breadcrumbItems.length; i++)
               Row(
                 children: [
+                  const Text('/'),
                   InkWell(
+                    // Last item should not be clickable
                     onTap: i == breadcrumbItems.length - 1
                         ? null
                         : () => Get.toNamed(breadcrumbItems[i]),
-                    child: Text(
-                      i == breadcrumbItems.length - 1
-                          ? breadcrumbItems[i].capitalize.toString()
-                          : THelperFunctions.capitalize(
-                              breadcrumbItems[i].substring(1),
+                    child: Padding(
+                      padding: const EdgeInsets.all(TSizes.xs),
+                      // Format breadcrumb item: capitalize and remove leading '/'
+                      child: Text(
+                        i == breadcrumbItems.length - 1
+                            ? breadcrumbItems[i].capitalize.toString()
+                            : THelperFunctions.capitalize(
+                                breadcrumbItems[i].substring(1),
+                              ),
+                        style: Theme.of(context).textTheme.bodySmall!.apply(
+                              fontWeightDelta: -1,
                             ),
-                      style: Theme.of(context).textTheme.bodySmall!.apply(
-                            fontWeightDelta: -1,
-                          ),
+                      ),
                     ),
                   ),
                 ],
@@ -65,6 +74,7 @@ class TBreadcrumbWithHeading extends StatelessWidget {
           ],
         ),
         const SizedBox(height: TSizes.sm),
+        
         // Heading of the page
         Row(
           children: [

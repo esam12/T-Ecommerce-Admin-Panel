@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/appbar/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/attributes_widget.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/product_type_widget.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/stock_pricing_widget.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/title_description.dart';
 import 'package:t_ecommerce_admin_panel/routes/routes.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
@@ -49,11 +51,11 @@ class CreateProductMobileScreen extends StatelessWidget {
                         const SizedBox(height: TSizes.spaceBtwItems),
 
                         // Stock
-                        // const ProductStockAndPricing(),
+                        const ProductStockAndPricing(),
                         const SizedBox(height: TSizes.spaceBtwSections),
 
                         // Attributes
-                        // const ProductAttributes(),
+                        const ProductAttributes(),
                         const SizedBox(height: TSizes.spaceBtwSections),
                       ],
                     ),

@@ -5,6 +5,7 @@ import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_pro
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/product_type_widget.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/stock_pricing_widget.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/title_description.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/variations_widget.dart';
 import 'package:t_ecommerce_admin_panel/routes/routes.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
 
@@ -47,7 +48,7 @@ class CreateProductMobileScreen extends StatelessWidget {
                         const SizedBox(height: TSizes.spaceBtwItems),
 
                         // Product Type
-                         const ProductTypeWidget(),
+                        const ProductTypeWidget(),
                         const SizedBox(height: TSizes.spaceBtwItems),
 
                         // Stock
@@ -63,7 +64,7 @@ class CreateProductMobileScreen extends StatelessWidget {
                   const SizedBox(height: TSizes.spaceBtwSections),
 
                   // Variations
-                  // const ProductVariations(),
+                  const ProductVariations(),
                   const SizedBox(height: TSizes.defaultSpace),
 
                   // Product Thumbnail

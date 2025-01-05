@@ -57,7 +57,7 @@ class ImagePopup extends StatelessWidget {
                       right: 0,
                       child: IconButton(
                         onPressed: () => Get.back(),
-                        icon: Icon(Iconsax.close_circle),
+                        icon: const Icon(Iconsax.close_circle),
                       ),
                     ),
                   ],

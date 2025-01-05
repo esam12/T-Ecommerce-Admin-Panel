@@ -13,7 +13,7 @@ import 't_rounded_image.dart';
 /// Widget for uploading images with optional editing functionality
 class TImageUploader extends StatelessWidget {
   const TImageUploader({
-    Key? key,
+    super.key,
     this.image,
     this.onIconButtonPressed,
     this.memoryImage,
@@ -26,7 +26,7 @@ class TImageUploader extends StatelessWidget {
     this.bottom = 0,
     this.right,
     this.left = 0,
-  }) : super(key: key);
+  });
 
   /// Whether to display the image in a circular shape
   final bool circular;

@@ -13,6 +13,9 @@ import 'package:t_ecommerce_admin_panel/features/shop/screens/dashboard/dashboar
 import 'package:t_ecommerce_admin_panel/features/authentication/screens/forget_password/forget_password_screen.dart';
 import 'package:t_ecommerce_admin_panel/features/authentication/screens/login/login_screen.dart';
 import 'package:t_ecommerce_admin_panel/features/authentication/screens/reset_password/reset_password_screen.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/product/all_products/products.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/create_product.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/product/edit_product/edit_product.dart';
 import 'package:t_ecommerce_admin_panel/routes/route_middleware.dart';
 import 'package:t_ecommerce_admin_panel/routes/routes.dart';
 
@@ -91,6 +94,29 @@ class TAppRoutes {
       page: () => const CreateBannerScreen(),
       middlewares: [TRouteMiddleware()],
     ),
+
+    // Products
+    GetPage(
+      name: TRoutes.products,
+      page: () => const ProductsScreen(),
+      middlewares: [TRouteMiddleware()],
+    ),
+
+      GetPage(
+      name: TRoutes.editProduct,
+      page: () => const EditProductScreen(),
+      middlewares: [TRouteMiddleware()],
+    ),
+    GetPage(
+      name: TRoutes.createProduct,
+      page: () => const CreateProductScreen(),
+      middlewares: [TRouteMiddleware()],
+    ),
+
+
+
+
+
 
   ];
 }

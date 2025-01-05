@@ -17,17 +17,18 @@ class TRoutes {
   static const createBanner = '/createBanner';
   static const editBanner = '/editBanner';
 
+  static const products = '/products';
+  static const createProduct = '/createProduct';
+  static const editProduct = '/editProduct';
+
   static List sidebarMenuItems = [
     dashboard,
     media,
     categories,
     brands,
     banners,
+    products,
   ];
-
-  // static const products = '/products';
-  // static const createProduct = '/createProduct';
-  // static const editProduct = '/editProduct';
 
   // static const customers = '/customers';
   // static const createCustomer = '/createCustomer';

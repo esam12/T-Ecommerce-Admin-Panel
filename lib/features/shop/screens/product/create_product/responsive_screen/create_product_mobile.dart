@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/appbar/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/title_description.dart';
 import 'package:t_ecommerce_admin_panel/routes/routes.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
 
@@ -30,7 +31,7 @@ class CreateProductMobileScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Basic Information
-                  // const ProductTitleAndDescription(),
+                  const ProductTitleAndDescription(),
                   const SizedBox(height: TSizes.spaceBtwSections),
 
                   // Stock & Pricing

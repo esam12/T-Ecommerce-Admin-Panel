@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/appbar/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/attributes_widget.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/product_type_widget.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/stock_pricing_widget.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/thumbnail_widget.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/title_description.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/variations_widget.dart';
 import 'package:t_ecommerce_admin_panel/routes/routes.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:t_ecommerce_admin_panel/utils/device/device_utility.dart';
@@ -35,7 +41,7 @@ class CreateProductDesktopScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         // Basic Information
-                        // const ProductTitleAndDescription(),
+                        const ProductTitleAndDescription(),
                         const SizedBox(height: TSizes.spaceBtwSections),
 
                         // Stock & Pricing
@@ -50,15 +56,15 @@ class CreateProductDesktopScreen extends StatelessWidget {
                               const SizedBox(height: TSizes.spaceBtwItems),
 
                               // Product Type
-                              // const ProductTypeWidget(),
+                              const ProductTypeWidget(),
                               const SizedBox(height: TSizes.spaceBtwItems),
 
                               // Stock
-                              // const ProductStockAndPricing(),
+                              const ProductStockAndPricing(),
                               const SizedBox(height: TSizes.spaceBtwSections),
 
                               // Attributes
-                              // const ProductAttributes(),
+                              const ProductAttributes(),
                               const SizedBox(height: TSizes.spaceBtwSections),
                             ],
                           ),
@@ -66,7 +72,7 @@ class CreateProductDesktopScreen extends StatelessWidget {
                         const SizedBox(height: TSizes.spaceBtwSections),
 
                         // Variations
-                        // const ProductVariations(),
+                        const ProductVariations(),
                       ],
                     ),
                   ),
@@ -77,7 +83,7 @@ class CreateProductDesktopScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         // Product Thumbnail
-                        // const ProductThumbnailImage(),
+                        const ProductThumbnailImage(),
                         const SizedBox(height: TSizes.spaceBtwSections),
 
                         // Product Images

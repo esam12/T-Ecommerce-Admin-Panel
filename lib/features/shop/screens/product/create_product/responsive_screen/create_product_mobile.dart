@@ -4,6 +4,7 @@ import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_contai
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/attributes_widget.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/product_type_widget.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/stock_pricing_widget.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/thumbnail_widget.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/title_description.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/variations_widget.dart';
 import 'package:t_ecommerce_admin_panel/routes/routes.dart';
@@ -68,7 +69,7 @@ class CreateProductMobileScreen extends StatelessWidget {
                   const SizedBox(height: TSizes.defaultSpace),
 
                   // Product Thumbnail
-                  // const ProductThumbnailImage(),
+                  const ProductThumbnailImage(),
                   const SizedBox(height: TSizes.spaceBtwSections),
 
                   // Product Images

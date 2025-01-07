@@ -4,6 +4,7 @@ import 'package:t_ecommerce_admin_panel/common/widgets/appbar/breadcrumbs/breadc
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/additional_images.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/attributes_widget.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/bottom_navigation_widget.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/brand_widget.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/categories_widget.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/product_type_widget.dart';
@@ -22,7 +23,7 @@ class CreateProductDesktopScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // bottomNavigationBar: const ProductBottomNavigationButtons(),
+      bottomNavigationBar: const ProductBottomNavigationButtons(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(TSizes.defaultSpace),
@@ -81,7 +82,7 @@ class CreateProductDesktopScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: TSizes.defaultSpace),
+                  const SizedBox(width: TSizes.defaultSpace),
 
                   // Sidebar
                   Expanded(

@@ -11,6 +11,7 @@ import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_pro
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/thumbnail_widget.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/title_description.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/variations_widget.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/visibility_widget.dart';
 import 'package:t_ecommerce_admin_panel/routes/routes.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:t_ecommerce_admin_panel/utils/device/device_utility.dart';
@@ -119,7 +120,7 @@ class CreateProductDesktopScreen extends StatelessWidget {
                         const SizedBox(height: TSizes.spaceBtwSections),
 
                         // Product Visibility
-                        // const ProductVisibility(),
+                        const ProductVisibilityWidget(),
                         const SizedBox(height: TSizes.spaceBtwSections),
                       ],
                     ),

@@ -13,6 +13,7 @@ class ProductBrand extends StatelessWidget {
   Widget build(BuildContext context) {
     return TRoundedContainer(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Brand Label
           Text(

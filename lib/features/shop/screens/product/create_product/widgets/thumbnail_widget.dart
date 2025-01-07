@@ -13,6 +13,7 @@ class ProductThumbnailImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return TRoundedContainer(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Product Thumbnail Text
           Text('Product Thumbnail',

@@ -95,6 +95,7 @@ class CreateProductDesktopScreen extends StatelessWidget {
                         // Product Images
                         TRoundedContainer(
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text('All Product Images',
                                   style: Theme.of(context)

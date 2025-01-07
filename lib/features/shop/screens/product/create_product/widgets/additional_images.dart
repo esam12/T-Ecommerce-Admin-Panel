@@ -22,67 +22,73 @@ class ProductAdditionalImages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => SizedBox(
-        height: 300,
-        child: Column(
-          children: [
-            // Section To Add Additional Product Images
-            Expanded(
-              child: GestureDetector(
-                onTap: onTapToAddImages,
-                child: TRoundedContainer(
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.asset(TImages.defaultMultiImageIcon,
-                            width: 50, height: 50),
-                        const Text('Add Additional Product Images'),
-                      ],
-                    ),
+    return
+        // Obx(
+        //   () =>
+        SizedBox(
+      height: 300,
+      child: Column(
+        children: [
+          // Section To Add Additional Product Images
+          Expanded(
+            child: GestureDetector(
+              onTap: onTapToAddImages,
+              child: TRoundedContainer(
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        TImages.defaultMultiImageIcon,
+                        width: 50,
+                        height: 50,
+                      ),
+                      const Text('Add Additional Product Images'),
+                    ],
                   ),
                 ),
               ),
             ),
+          ),
 
-            // Section to Display Uploaded Images
-            Expanded(
-                child: Row(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 80,
-                    child: _uploadedImagesOrEmptyList(),
-                  ),
-                ),
-                SizedBox(width: TSizes.spaceBtwItems / 2),
-
-                // Add More Images Button
-                TRoundedContainer(
-                  width: 80,
+          // Section to Display Uploaded Images
+          Expanded(
+              child: Row(
+            children: [
+              Expanded(
+                child: SizedBox(
                   height: 80,
-                  showBorder: true,
-                  borderColor: TColors.grey,
-                  backgroundColor: TColors.white,
-                  onTap: onTapToAddImages,
-                  child: const Center(
-                    child: Icon(Iconsax.add),
-                  ),
-                )
-              ],
-            ))
-          ],
-        ),
+                  child: _uploadedImagesOrEmptyList(),
+                ),
+              ),
+              const SizedBox(width: TSizes.spaceBtwItems / 2),
+
+              // Add More Images Button
+              TRoundedContainer(
+                width: 80,
+                height: 80,
+                showBorder: true,
+                borderColor: TColors.grey,
+                backgroundColor: TColors.white,
+                onTap: onTapToAddImages,
+                child: const Center(
+                  child: Icon(Iconsax.add),
+                ),
+              )
+            ],
+          ))
+        ],
       ),
     );
+    // );
   }
 
   // Widget to Display Either Uploaded Images or Empty List
   Widget _uploadedImagesOrEmptyList() {
-    return additionalProductImagesURLs.isEmpty
-        ? _uploadedImages()
-        : _emptyList();
+    return _emptyList();
+    // return additionalProductImagesURLs.isEmpty
+    //     ? _uploadedImages()
+    //     : _emptyList();
   }
 
   // Widget to Display Empty List Placeholder

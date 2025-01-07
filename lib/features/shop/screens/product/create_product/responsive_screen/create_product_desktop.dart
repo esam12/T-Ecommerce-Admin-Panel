@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/appbar/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/additional_images.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/attributes_widget.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/product_type_widget.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/stock_pricing_widget.dart';
@@ -95,12 +97,12 @@ class CreateProductDesktopScreen extends StatelessWidget {
                                       .textTheme
                                       .headlineSmall),
                               const SizedBox(height: TSizes.spaceBtwItems),
-
-                              // ProductAdditionalImages(
-                              //   additionalProductImages: RxList<String>.empty(),
-                              //   onTapToAddImages(){},
-                              //   onTapToRemoveImages(index){},
-                              // ),
+                              ProductAdditionalImages(
+                                additionalProductImagesURLs:
+                                    RxList<String>.empty(),
+                                onTapToAddImages: () {},
+                                onTapToRemoveImage: (index) {},
+                              ),
                             ],
                           ),
                         ),

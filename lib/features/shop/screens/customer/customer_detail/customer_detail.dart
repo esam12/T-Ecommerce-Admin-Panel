@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/layouts/templates/site_template.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/customer/customer_detail/responsive_screens/customer_detail_desktop.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/customer/customer_detail/responsive_screens/customer_detail_mobile.dart';
@@ -9,12 +10,12 @@ class CustomerDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   // final customer = Get.arguments;
-   
-    return const TSiteTemplate(
-      desktop: CustomerDetailDesktopScreen(),
-      tablet: CustomerDetailTabletScreen(),
-      mobile: CustomerDetailMobileScreen(),
+    final customer = Get.arguments;
+
+    return TSiteTemplate(
+      desktop: CustomerDetailDesktopScreen(customer: customer),
+      tablet: CustomerDetailTabletScreen(customer: customer),
+      mobile: CustomerDetailMobileScreen(customer: customer),
     );
   }
 }

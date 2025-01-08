@@ -7,7 +7,7 @@ class OrderModel {
   final String docId;
 
   final OrderStatus orderStatus;
-  final int totalAmount;
+  final num totalAmount;
   final DateTime orderDate;
   final PaymentMethods paymentMethod;
   // final AddressModel address;
@@ -24,7 +24,7 @@ class OrderModel {
     required this.orderDate,
     this.paymentMethod = PaymentMethods.paypal,
     // this.address,
-    required this.deliveryDate,
+    this.deliveryDate,
   });
 
   String get formattedOrderDate => THelperFunctions.getFormattedDate(orderDate);

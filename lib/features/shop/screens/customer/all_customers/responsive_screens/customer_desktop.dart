@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/appbar/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/data_table/table_header.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/customer/all_customers/table/data_table.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
 
 class CustomerDesktopScreen extends StatelessWidget {
@@ -30,6 +31,7 @@ class CustomerDesktopScreen extends StatelessWidget {
                     SizedBox(height: TSizes.spaceBtwItems),
 
                     // Table
+                    CustomerTable(),
                   ],
                 ),
               ),

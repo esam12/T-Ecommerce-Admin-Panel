@@ -21,6 +21,10 @@ class TRoutes {
   static const createProduct = '/createProduct';
   static const editProduct = '/editProduct';
 
+  static const customers = '/customers';
+  static const createCustomer = '/createCustomer';
+  static const customerDetails = '/customerDetails';
+
   static List sidebarMenuItems = [
     dashboard,
     media,
@@ -28,9 +32,6 @@ class TRoutes {
     brands,
     banners,
     products,
+    customers,
   ];
-
-  // static const customers = '/customers';
-  // static const createCustomer = '/createCustomer';
-  // static const customerDetails = '/customerDetails';
 }

@@ -22,8 +22,11 @@ class TRoutes {
   static const editProduct = '/editProduct';
 
   static const customers = '/customers';
-  static const createCustomer = '/createCustomer';
   static const customerDetails = '/customerDetails';
+
+  static const orders = '/orders';
+  static const orderDetails = '/orderDetails';
+
 
   static List sidebarMenuItems = [
     dashboard,
@@ -33,5 +36,6 @@ class TRoutes {
     banners,
     products,
     customers,
+    orders,
   ];
 }

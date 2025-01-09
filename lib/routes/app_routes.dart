@@ -15,6 +15,7 @@ import 'package:t_ecommerce_admin_panel/features/shop/screens/dashboard/dashboar
 import 'package:t_ecommerce_admin_panel/features/authentication/screens/forget_password/forget_password_screen.dart';
 import 'package:t_ecommerce_admin_panel/features/authentication/screens/login/login_screen.dart';
 import 'package:t_ecommerce_admin_panel/features/authentication/screens/reset_password/reset_password_screen.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/order/all_orders/orders.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/all_products/products.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/create_product.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/edit_product/edit_product.dart';
@@ -125,6 +126,13 @@ class TAppRoutes {
     GetPage(
       name: TRoutes.customerDetails,
       page: () => const CustomerDetailScreen(),
+      middlewares: [TRouteMiddleware()],
+    ),
+
+    // Orders
+    GetPage(
+      name: TRoutes.orders,
+      page: () => const OrdersScreen(),
       middlewares: [TRouteMiddleware()],
     ),
   ];

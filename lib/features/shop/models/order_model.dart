@@ -1,3 +1,4 @@
+import 'package:t_ecommerce_admin_panel/features/shop/models/cart_model.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:t_ecommerce_admin_panel/utils/helpers/helper_functions.dart';
 
@@ -11,7 +12,7 @@ class OrderModel {
   final DateTime orderDate;
   final PaymentMethods paymentMethod;
   // final AddressModel address;
-  // final List<CartItemModel> items;
+  final List<CartItemModel> items;
   final DateTime? deliveryDate;
 
   OrderModel({
@@ -19,7 +20,7 @@ class OrderModel {
     this.userId = '',
     this.docId = '',
     required this.orderStatus,
-    // required this.items,
+     this.items = const [],
     required this.totalAmount,
     required this.orderDate,
     this.paymentMethod = PaymentMethods.paypal,

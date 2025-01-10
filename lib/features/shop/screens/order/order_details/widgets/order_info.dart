@@ -61,6 +61,7 @@ class OrderInfo extends StatelessWidget {
                         onChanged: (OrderStatus? newValue) {},
                         items: OrderStatus.values.map((OrderStatus status) {
                           return DropdownMenuItem<OrderStatus>(
+                            value: status,
                             child: Text(
                               status.name.capitalize.toString(),
                               style: TextStyle(

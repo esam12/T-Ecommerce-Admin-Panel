@@ -20,7 +20,7 @@ class OrderModel {
     this.userId = '',
     this.docId = '',
     required this.orderStatus,
-     this.items = const [],
+    this.items = const [],
     required this.totalAmount,
     required this.orderDate,
     this.paymentMethod = PaymentMethods.paypal,

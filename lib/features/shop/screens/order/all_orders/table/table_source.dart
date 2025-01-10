@@ -3,22 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/icons/table_action_icon_buttons.dart';
-import 'package:t_ecommerce_admin_panel/features/shop/models/order_model.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/controllers/dashboard/dashboard_controller.dart';
 import 'package:t_ecommerce_admin_panel/routes/routes.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/colors.dart';
-import 'package:t_ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:t_ecommerce_admin_panel/utils/helpers/helper_functions.dart';
 
 class OrdersRows extends DataTableSource {
   @override
   DataRow? getRow(int index) {
-    final order = OrderModel(
-      id: 'id',
-      orderStatus: OrderStatus.pending,
-      totalAmount: 365,
-      orderDate: DateTime.now(),
-    );
+    final order = DashboardController.orders[index];
 
     return DataRow2(
       onTap: () => Get.toNamed(TRoutes.orderDetails, arguments: order),
@@ -68,7 +62,7 @@ class OrdersRows extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => 10;
+  int get rowCount => DashboardController.orders.length;
 
   @override
   int get selectedRowCount => 0;

@@ -16,6 +16,7 @@ class OrderTransaction extends StatelessWidget {
     return TRoundedContainer(
       padding: const EdgeInsets.all(TSizes.defaultSpace),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Transactions',
               style: Theme.of(context).textTheme.headlineMedium),

@@ -19,6 +19,7 @@ class OrderCustomer extends StatelessWidget {
         TRoundedContainer(
           padding: const EdgeInsets.all(TSizes.defaultSpace),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Customer',
                   style: Theme.of(context).textTheme.headlineMedium),
@@ -34,6 +35,7 @@ class OrderCustomer extends StatelessWidget {
                   const SizedBox(width: TSizes.spaceBtwItems),
                   Expanded(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'ISAM ELZOBI',
@@ -73,7 +75,7 @@ class OrderCustomer extends StatelessWidget {
                 Text('support@codingwithiso.com',
                     style: Theme.of(context).textTheme.titleLarge),
                 const SizedBox(height: TSizes.spaceBtwSections),
-                Text('+90-***-***-**-**',
+                Text('+90 *** *** ** **',
                     style: Theme.of(context).textTheme.titleLarge),
               ],
             ),
@@ -87,6 +89,7 @@ class OrderCustomer extends StatelessWidget {
           child: TRoundedContainer(
             padding: const EdgeInsets.all(TSizes.defaultSpace),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Shipping Address',
                     style: Theme.of(context).textTheme.headlineMedium),
@@ -109,6 +112,7 @@ class OrderCustomer extends StatelessWidget {
           child: TRoundedContainer(
             padding: const EdgeInsets.all(TSizes.defaultSpace),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Billing Address',
                     style: Theme.of(context).textTheme.headlineMedium),

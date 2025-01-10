@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/models/cart_model.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/models/order_model.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:t_ecommerce_admin_panel/utils/helpers/helper_functions.dart';
@@ -20,6 +21,14 @@ class DashboardController extends GetxController {
       totalAmount: 256,
       orderDate: DateTime(2024, 10, 29),
       deliveryDate: DateTime(2024, 11, 25),
+      items: [
+        CartItemModel(
+            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
+        CartItemModel(
+            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
+        CartItemModel(
+            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
+      ],
     ),
     OrderModel(
       id: 'CS-0002',
@@ -27,6 +36,14 @@ class DashboardController extends GetxController {
       totalAmount: 75,
       orderDate: DateTime(2024, 11, 01),
       deliveryDate: DateTime(2024, 11, 21),
+      items: [
+        CartItemModel(
+            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
+        CartItemModel(
+            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
+        CartItemModel(
+            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
+      ],
     ),
     OrderModel(
       id: 'CS-0003',
@@ -34,6 +51,14 @@ class DashboardController extends GetxController {
       totalAmount: 150,
       orderDate: DateTime(2024, 10, 31),
       deliveryDate: DateTime(2024, 11, 22),
+      items: [
+        CartItemModel(
+            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
+        CartItemModel(
+            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
+        CartItemModel(
+            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
+      ],
     ),
     OrderModel(
       id: 'CS-0004',
@@ -41,6 +66,14 @@ class DashboardController extends GetxController {
       totalAmount: 270,
       orderDate: DateTime(2024, 11, 02),
       deliveryDate: DateTime(2024, 11, 25),
+      items: [
+        CartItemModel(
+            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
+        CartItemModel(
+            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
+        CartItemModel(
+            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
+      ],
     ),
     OrderModel(
       id: 'CS-0005',
@@ -48,6 +81,14 @@ class DashboardController extends GetxController {
       totalAmount: 325,
       orderDate: DateTime(2024, 11, 03),
       deliveryDate: DateTime(2024, 11, 25),
+      items: [
+        CartItemModel(
+            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
+        CartItemModel(
+            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
+        CartItemModel(
+            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
+      ],
     ),
     OrderModel(
       id: 'CS-0006',
@@ -55,6 +96,14 @@ class DashboardController extends GetxController {
       totalAmount: 150,
       orderDate: DateTime(2024, 11, 04),
       deliveryDate: DateTime(2024, 11, 26),
+      items: [
+        CartItemModel(
+            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
+        CartItemModel(
+            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
+        CartItemModel(
+            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
+      ],
     ),
   ];
 

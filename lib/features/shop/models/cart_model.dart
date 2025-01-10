@@ -16,4 +16,16 @@ class CartItemModel {
     required this.totalAmount,
     this.selectedVariation,
   });
+
+  // Empty Cart Item
+  static CartItemModel empty() {
+    return CartItemModel(
+      id: '',
+      title: '',
+      image: '',
+      quantity: 0,
+      price: 0,
+      totalAmount: 0,
+    );
+  }
 }

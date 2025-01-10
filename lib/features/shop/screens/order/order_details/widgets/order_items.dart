@@ -149,8 +149,10 @@ class OrderItems extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Total', style: Theme.of(context).textTheme.titleLarge),
-                    Text('\$${TPricingCalculator.calculateTotalPrice(subTotal, '')}',
+                    Text('Total',
+                        style: Theme.of(context).textTheme.titleLarge),
+                    Text(
+                        '\$${TPricingCalculator.calculateTotalPrice(subTotal, '')}',
                         style: Theme.of(context).textTheme.titleLarge),
                   ],
                 ),

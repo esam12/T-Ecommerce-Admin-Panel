@@ -27,6 +27,11 @@ class TRoutes {
   static const orders = '/orders';
   static const orderDetails = '/orderDetails';
 
+  static const users = '/coupons';
+  static const settings = '/settings';
+  static const profile = '/profile';
+
+
 
   static List sidebarMenuItems = [
     dashboard,
@@ -37,5 +42,7 @@ class TRoutes {
     products,
     customers,
     orders,
+    settings,
+    profile,
   ];
 }

@@ -85,6 +85,26 @@ class TSidebar extends StatelessWidget {
                       icon: Iconsax.box,
                       route: TRoutes.orders,
                     ),
+
+                    // Other Menu Items
+                    Text(
+                      'OTHER',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall!
+                          .apply(letterSpacingDelta: 1.2),
+                    ),
+                    const TMenuItem(
+                      title: 'Profile',
+                      icon: Iconsax.user,
+                      route: TRoutes.profile,
+                    ),
+                    const TMenuItem(
+                      title: 'Settings',
+                      icon: Iconsax.setting_2,
+                      route: TRoutes.settings,
+                    ),
+
                     const TMenuItem(
                       title: 'Logout',
                       icon: Iconsax.logout,

@@ -33,7 +33,10 @@ class ImageAndMeta extends StatelessWidget {
               ),
               const SizedBox(height: TSizes.spaceBtwItems),
 
-              Text('T Store', style: Theme.of(context).textTheme.headlineLarge),
+              Text('Coding With ISO',
+                  style: Theme.of(context).textTheme.headlineLarge),
+              const Text('alzeabiesam@gmail.com'),
+              const SizedBox(height: TSizes.spaceBtwSections),
             ],
           ),
         ],

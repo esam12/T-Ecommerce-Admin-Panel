@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/appbar/breadcrumbs/breadcrumb_with_heading.dart';
-import 'package:t_ecommerce_admin_panel/features/personalization/screens/settings/widgets/image_and_meta.dart';
-import 'package:t_ecommerce_admin_panel/features/personalization/screens/settings/widgets/profile_form.dart';
+import 'package:t_ecommerce_admin_panel/features/personalization/screens/profile/widgets/image_and_meta.dart';
+import 'package:t_ecommerce_admin_panel/features/personalization/screens/profile/widgets/profile_form.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
 
 class ProfileDesktopScreen extends StatelessWidget {

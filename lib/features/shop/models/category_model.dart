@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:t_ecommerce_admin_panel/utils/formatters/formatter.dart';
 
 class CategoryModel {
   final String id;
@@ -18,6 +19,9 @@ class CategoryModel {
     this.createdAt,
     this.updatedAt,
   });
+
+  String get formattedDate => TFormatter.formatDate(createdAt);
+  String get formattedUpdateDate => TFormatter.formatDate(updatedAt);
 
   /// Create Empty model
   static CategoryModel empty() => CategoryModel(

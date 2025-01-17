@@ -51,8 +51,8 @@ class CategoryRows extends DataTableSource {
         DataCell(category.isFeatured
             ? const Icon(Iconsax.heart5, color: TColors.primary)
             : const Icon(Iconsax.heart)),
-        DataCell(Text(DateTime.now().toString())),
-        DataCell(Text(category.createdAt == null ? '' : category.formattedDate)),
+        DataCell(
+            Text(category.createdAt == null ? '' : category.formattedDate)),
         DataCell(
           TTableActionButtons(
             onEditPressed: () =>

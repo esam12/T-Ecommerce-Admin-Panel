@@ -37,12 +37,12 @@ class CategoryModel {
   /// Convert model to json structure so that you can store data in Firebase
   Map<String, dynamic> toJson() => {
         'id': id,
-        'name': name,
-        'image': image,
-        'isFeatured': isFeatured,
-        'parentId': parentId,
-        'createdAt': createdAt,
-        'updatedAt': updatedAt,
+        'Name': name,
+        'Image': image,
+        'IsFeatured': isFeatured,
+        'ParentId': parentId,
+        'CreatedAt': createdAt,
+        'UpdatedAt': updatedAt,
       };
 
   /// Map Json oriented document snapshot from Firebase to userModel
@@ -52,14 +52,14 @@ class CategoryModel {
       final data = document.data()!;
       return CategoryModel(
         id: document.id,
-        name: data['name'] ?? '',
-        image: data['image'] ?? '',
-        isFeatured: data['isFeatured'] ?? false,
-        parentId: data['parentId'] ?? '',
+        name: data['Name'] ?? '',
+        image: data['Image'] ?? '',
+        isFeatured: data['IsFeatured'] ?? false,
+        parentId: data['ParentId'] ?? '',
         createdAt:
-            data.containsKey('createdAt') ? data['createdAt'].toDate() : null,
+            data.containsKey('CreatedAt') ? data['CreatedAt'].toDate() : null,
         updatedAt:
-            data.containsKey('updatedAt') ? data['updatedAt'].toDate() : null,
+            data.containsKey('UpdatedAt') ? data['UpdatedAt'].toDate() : null,
       );
     } else {
       return CategoryModel.empty();

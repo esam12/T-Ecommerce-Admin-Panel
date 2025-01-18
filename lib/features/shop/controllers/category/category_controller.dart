@@ -11,7 +11,12 @@ class CategoryController extends GetxController {
   RxList<CategoryModel> allItems = <CategoryModel>[].obs;
   RxList<CategoryModel> filteredItems = <CategoryModel>[].obs;
 
+  // Category Repository
   final _categoryRepository = Get.put(CategoryRepository());
+
+  // Sorting
+  RxInt sortColumnIndex = 1.obs;
+  RxBool sortAscending = true.obs;
 
   @override
   void onInit() {
@@ -35,5 +40,30 @@ class CategoryController extends GetxController {
       isLoading.value = false;
       TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
+  }
+
+  // Sorting Methods
+  void sortByName(int columnIndex, bool ascending) {
+    sortColumnIndex.value = columnIndex;
+    sortAscending.value = ascending;
+    filteredItems.sort((a, b) {
+      if (ascending) {
+        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+      } else {
+        return b.name.toLowerCase().compareTo(a.name.toLowerCase());
+      }
+    });
+  }
+
+  void sortByParentCategory(int columnIndex, bool ascending) {
+    sortColumnIndex.value = columnIndex;
+    sortAscending.value = ascending;
+    filteredItems.sort((a, b) {
+      if (ascending) {
+        return a.parentId.toLowerCase().compareTo(b.parentId.toLowerCase());
+      } else {
+        return b.parentId.toLowerCase().compareTo(a.parentId.toLowerCase());
+      }
+    });
   }
 }

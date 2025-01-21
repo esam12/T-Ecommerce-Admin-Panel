@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:t_ecommerce_admin_panel/data/repositories/category/category_repository.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/models/category_model.dart';
@@ -17,6 +18,9 @@ class CategoryController extends GetxController {
   // Sorting
   RxInt sortColumnIndex = 1.obs;
   RxBool sortAscending = true.obs;
+
+  // Searching Text Field Controller
+  final TextEditingController searchController = TextEditingController();
 
   @override
   void onInit() {
@@ -39,6 +43,18 @@ class CategoryController extends GetxController {
     } catch (e) {
       isLoading.value = false;
       TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+    }
+  }
+
+  // Search Methods
+  void searchItems(String query) {
+    if (query.isEmpty) {
+      filteredItems.assignAll(allItems);
+    } else {
+      filteredItems.assignAll(allItems
+          .where(
+              (item) => item.name.toLowerCase().contains(query.toLowerCase()))
+          .toList());
     }
   }
 

@@ -22,6 +22,9 @@ class CategoryController extends GetxController {
   // Searching Text Field Controller
   final TextEditingController searchController = TextEditingController();
 
+  // Selected Rows
+  RxList<bool> selectedRows = <bool>[].obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -37,7 +40,7 @@ class CategoryController extends GetxController {
       }
       allItems.assignAll(fetchedItems);
       filteredItems.assignAll(allItems);
-
+      selectedRows.assignAll(List.generate(allItems.length, (_) => false));
       // Stop loading
       isLoading.value = false;
     } catch (e) {
@@ -82,4 +85,6 @@ class CategoryController extends GetxController {
       }
     });
   }
+
+  
 }

@@ -19,6 +19,9 @@ class CategoryRows extends DataTableSource {
     final parentCategory = controller.allItems
         .firstWhereOrNull((item) => item.id == category.parentId);
     return DataRow2(
+      selected: controller.selectedRows[index],
+      onSelectChanged: (value) =>
+          controller.selectedRows[index] = value ?? false,
       cells: [
         DataCell(
           Row(

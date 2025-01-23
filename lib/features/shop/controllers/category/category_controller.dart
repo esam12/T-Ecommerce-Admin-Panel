@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:t_ecommerce_admin_panel/data/repositories/category/category_repository.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/models/category_model.dart';
+import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
+import 'package:t_ecommerce_admin_panel/utils/popups/full_screen_loader.dart';
 import 'package:t_ecommerce_admin_panel/utils/popups/loaders.dart';
 
 class CategoryController extends GetxController {
@@ -86,5 +88,70 @@ class CategoryController extends GetxController {
     });
   }
 
-  
+  // Confirm and Remove Item
+  void removeItemConfirmation(CategoryModel category) {
+    Get.defaultDialog(
+      title: 'Delete Item',
+      content: const Text('Are you sure you want to delete this item?'),
+      confirm: SizedBox(
+          width: 60,
+          child: ElevatedButton(
+            style: OutlinedButton.styleFrom(
+              padding:
+                  const EdgeInsets.symmetric(vertical: TSizes.buttonHeight / 2),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(TSizes.buttonRadius * 5),
+              ),
+            ),
+            child: const Text('Ok'),
+            onPressed: () async => await deleteOnConfirm(category),
+          )),
+      cancel: SizedBox(
+        width: 60,
+        child: OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            padding:
+                const EdgeInsets.symmetric(vertical: TSizes.buttonHeight / 2),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(TSizes.buttonRadius * 5),
+            ),
+          ),
+          child: const Text('Cancel'),
+          onPressed: () => Get.back(),
+        ),
+      ),
+    );
+  }
+
+  // Delete Item
+  Future<void> deleteOnConfirm(CategoryModel category) async {
+    try {
+      // Remove the Confirmation Dialog
+      TFullScreenLoader.stopLoading();
+
+      // Show Loader
+      TFullScreenLoader.popUpCircular();
+
+      await _categoryRepository.deleteCategory(category.id);
+
+      removeItemFromLists(category);
+      // Stop Loader
+      TFullScreenLoader.stopLoading();
+      TLoaders.successSnackBar(
+        title: 'Item Deleted',
+        message: 'Your item has been successfully deleted.',
+      );
+    } catch (e) {
+      // Stop Loader
+      TFullScreenLoader.stopLoading();
+      TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+    }
+  }
+
+  // Method for removing an item from the lists.
+  void removeItemFromLists(CategoryModel item) {
+    allItems.remove(item);
+    filteredItems.remove(item);
+    selectedRows.assignAll(List.generate(allItems.length, (_) => false));
+  }
 }

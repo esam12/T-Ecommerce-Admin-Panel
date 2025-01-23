@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/models/category_model.dart';
 import 'package:t_ecommerce_admin_panel/utils/exceptions/firebase_auth_exceptions.dart';
+import 'package:t_ecommerce_admin_panel/utils/exceptions/format_exceptions.dart';
 import 'package:t_ecommerce_admin_panel/utils/exceptions/platform_exceptions.dart';
 
 class CategoryRepository extends GetxController {
@@ -20,6 +21,21 @@ class CategoryRepository extends GetxController {
           .toList();
     } on FirebaseException catch (e) {
       throw TFirebaseAuthException(e.code).message;
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
+  // Delete an existing category from the 'Categories' collection
+  Future<void> deleteCategory(String categoryId) async {
+    try {
+      await _db.collection('Categories').doc(categoryId).delete();
+    } on FirebaseException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
     } on PlatformException catch (e) {
       throw TPlatformException(e.code).message;
     } catch (e) {

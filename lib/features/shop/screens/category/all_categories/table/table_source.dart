@@ -60,7 +60,7 @@ class CategoryRows extends DataTableSource {
           TTableActionButtons(
             onEditPressed: () =>
                 Get.toNamed(TRoutes.editCategory, arguments: category),
-            onDeletePressed: () {},
+            onDeletePressed: () => controller.removeItemConfirmation(category),
           ),
         )
       ],

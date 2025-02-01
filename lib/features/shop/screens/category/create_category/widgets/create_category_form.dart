@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/images/image_uploader.dart';
+import 'package:t_ecommerce_admin_panel/common/widgets/shimmers/shimmer.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/controllers/category/category_controller.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/controllers/category/create_category_controller.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/image_strings.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
@@ -12,10 +16,14 @@ class CreateCategoryForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final createController = Get.put(CreateCategoryController());
+    final categoryController = Get.put(CategoryController());
+
     return TRoundedContainer(
       width: 500,
       padding: const EdgeInsets.all(TSizes.defaultSpace),
       child: Form(
+        key: createController.formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -27,6 +35,7 @@ class CreateCategoryForm extends StatelessWidget {
 
             // Name Text Field
             TextFormField(
+              controller: createController.name,
               validator: (value) => TValidator.validateEmptyText('Name', value),
               decoration: const InputDecoration(
                 labelText: 'Category Name',
@@ -37,37 +46,52 @@ class CreateCategoryForm extends StatelessWidget {
             ),
             const SizedBox(height: TSizes.spaceBtwInputFields),
 
-            DropdownButtonFormField(
-              decoration: const InputDecoration(
-                hintText: 'Parent Category',
-                labelText: 'Parent Category',
-                prefixIcon: Icon(Iconsax.bezier),
-              ),
-              items: const [
-                DropdownMenuItem(
-                  value: '',
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [Text('item.name')],
-                  ),
-                )
-              ],
-              onChanged: (newValue) {},
+            Obx(
+              () => categoryController.isLoading.value
+                  ? const TShimmerEffect(width: double.infinity, height: 55)
+                  : DropdownButtonFormField(
+                      decoration: const InputDecoration(
+                        hintText: 'Parent Category',
+                        labelText: 'Parent Category',
+                        prefixIcon: Icon(Iconsax.bezier),
+                      ),
+                      items: categoryController.allItems
+                          .map(
+                            (item) => DropdownMenuItem(
+                              value: item,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(item.name),
+                                ],
+                              ),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (newValue) =>
+                          createController.selectedParent.value = newValue!,
+                    ),
             ),
 
             const SizedBox(height: TSizes.spaceBtwInputFields * 2),
-            TImageUploader(
-              width: 80,
-              height: 80,
-              image: TImages.defaultImage,
-              imageType: ImageType.asset,
-              onIconButtonPressed: () {},
+            Obx(
+              () => TImageUploader(
+                width: 80,
+                height: 80,
+                image: createController.imageURL.value.isNotEmpty
+                    ? createController.imageURL.value
+                    : TImages.defaultImage,
+                imageType: createController.imageURL.value.isNotEmpty
+                    ? ImageType.network
+                    : ImageType.asset,
+                onIconButtonPressed: () {},
+              ),
             ),
             const SizedBox(height: TSizes.spaceBtwInputFields),
 
             CheckboxMenuButton(
               value: true,
-              onChanged: (value) {},
+              onChanged: (value) => createController.isFeatured.value = value ?? false,
               child: const Text('Featured'),
             ),
             const SizedBox(height: TSizes.spaceBtwInputFields * 2),

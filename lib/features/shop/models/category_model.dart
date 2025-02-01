@@ -2,16 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:t_ecommerce_admin_panel/utils/formatters/formatter.dart';
 
 class CategoryModel {
-  final String id;
+  String? id;
   final String name;
   final String image;
   final String parentId;
   final bool isFeatured;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   CategoryModel({
-    required this.id,
+    this.id,
     required this.name,
     required this.image,
     this.isFeatured = false,
@@ -36,13 +36,12 @@ class CategoryModel {
 
   /// Convert model to json structure so that you can store data in Firebase
   Map<String, dynamic> toJson() => {
-        'id': id,
         'Name': name,
         'Image': image,
         'IsFeatured': isFeatured,
         'ParentId': parentId,
         'CreatedAt': createdAt,
-        'UpdatedAt': updatedAt,
+        'UpdatedAt': updatedAt = DateTime.now(),
       };
 
   /// Map Json oriented document snapshot from Firebase to userModel

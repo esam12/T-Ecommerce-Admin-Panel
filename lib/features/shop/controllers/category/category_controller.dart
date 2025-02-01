@@ -132,7 +132,7 @@ class CategoryController extends GetxController {
       // Show Loader
       TFullScreenLoader.popUpCircular();
 
-      await _categoryRepository.deleteCategory(category.id);
+      await _categoryRepository.deleteCategory(category.id!);
 
       removeItemFromLists(category);
       // Stop Loader
@@ -153,5 +153,14 @@ class CategoryController extends GetxController {
     allItems.remove(item);
     filteredItems.remove(item);
     selectedRows.assignAll(List.generate(allItems.length, (_) => false));
+  }
+
+  // Method for adding an item to the lists.
+  void addItemToList(CategoryModel item) {
+    allItems.add(item);
+    filteredItems.add(item);
+    selectedRows.assignAll(List.generate(allItems.length, (_) => false));
+
+    filteredItems.refresh();
   }
 }

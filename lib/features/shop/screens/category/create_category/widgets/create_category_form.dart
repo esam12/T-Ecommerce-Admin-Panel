@@ -84,22 +84,25 @@ class CreateCategoryForm extends StatelessWidget {
                 imageType: createController.imageURL.value.isNotEmpty
                     ? ImageType.network
                     : ImageType.asset,
-                onIconButtonPressed: () {},
+                onIconButtonPressed: () => createController.pickImage(),
               ),
             ),
             const SizedBox(height: TSizes.spaceBtwInputFields),
 
-            CheckboxMenuButton(
-              value: true,
-              onChanged: (value) => createController.isFeatured.value = value ?? false,
-              child: const Text('Featured'),
+            Obx(
+              () => CheckboxMenuButton(
+                value: createController.isFeatured.value,
+                onChanged: (value) =>
+                    createController.isFeatured.value = value ?? false,
+                child: const Text('Featured'),
+              ),
             ),
             const SizedBox(height: TSizes.spaceBtwInputFields * 2),
 
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () async => await createController.createCategory(),
                 child: const Text('Create'),
               ),
             ),

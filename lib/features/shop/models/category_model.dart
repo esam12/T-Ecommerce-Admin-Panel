@@ -3,10 +3,10 @@ import 'package:t_ecommerce_admin_panel/utils/formatters/formatter.dart';
 
 class CategoryModel {
   String? id;
-  final String name;
-  final String image;
-  final String parentId;
-  final bool isFeatured;
+  String name;
+  String image;
+  String parentId;
+  bool isFeatured;
   DateTime? createdAt;
   DateTime? updatedAt;
 

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/models/category_model.dart';
 
-class EditCategoryMobile extends StatelessWidget {
-  const EditCategoryMobile({super.key});
+class EditCategoryMobileScreen extends StatelessWidget {
+  const EditCategoryMobileScreen({super.key, required this.category});
+  final CategoryModel category;
+
 
   @override
   Widget build(BuildContext context) {

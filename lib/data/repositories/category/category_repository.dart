@@ -59,4 +59,19 @@ class CategoryRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
+
+  // Update an existing category in the 'Categories' collection
+  Future<void> updateCategory(CategoryModel category) async {
+    try {
+      await _db.collection('Categories').doc(category.id).update(category.toJson());
+    } on FirebaseException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 }

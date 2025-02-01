@@ -88,7 +88,7 @@ class CreateCategoryController extends GetxController {
       imageURL.value = selectedImage.url;
     }
   }
-
+  /// Reset Fields
   void resetFields() {
     name.clear();
     selectedParent(CategoryModel.empty());

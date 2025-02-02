@@ -58,7 +58,8 @@ class CreateCategoryController extends GetxController {
           await CategoryRepository.instance.createCategory(newRecord);
 
       //Update All Data List
-      CategoryController.instance.allItems.add(newRecord);
+      // CategoryController.instance.allItems.add(newRecord);
+      CategoryController.instance.addItemToList(newRecord);
 
       // Reset Fields
       resetFields();
@@ -88,6 +89,7 @@ class CreateCategoryController extends GetxController {
       imageURL.value = selectedImage.url;
     }
   }
+
   /// Reset Fields
   void resetFields() {
     name.clear();

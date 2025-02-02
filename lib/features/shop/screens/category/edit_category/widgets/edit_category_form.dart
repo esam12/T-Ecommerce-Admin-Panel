@@ -75,16 +75,18 @@ class EditCategoryForm extends StatelessWidget {
             ),
 
             const SizedBox(height: TSizes.spaceBtwInputFields * 2),
-            TImageUploader(
-              width: 80,
-              height: 80,
-              image: editController.imageURL.value.isNotEmpty
-                  ? editController.imageURL.value
-                  : TImages.defaultImage,
-              imageType: editController.imageURL.value.isNotEmpty
-                  ? ImageType.network
-                  : ImageType.asset,
-              onIconButtonPressed: () => editController.pickImage(),
+            Obx(
+              () => TImageUploader(
+                width: 80,
+                height: 80,
+                image: editController.imageURL.value.isNotEmpty
+                    ? editController.imageURL.value
+                    : TImages.defaultImage,
+                imageType: editController.imageURL.value.isNotEmpty
+                    ? ImageType.network
+                    : ImageType.asset,
+                onIconButtonPressed: () => editController.pickImage(),
+              ),
             ),
             const SizedBox(height: TSizes.spaceBtwInputFields),
 

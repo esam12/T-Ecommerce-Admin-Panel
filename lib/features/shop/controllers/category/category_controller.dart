@@ -178,5 +178,6 @@ class CategoryController extends GetxController {
       filteredItems[filteredItemIndex] = item;
     }
     filteredItems.refresh();
+    allItems.refresh();
   }
 }

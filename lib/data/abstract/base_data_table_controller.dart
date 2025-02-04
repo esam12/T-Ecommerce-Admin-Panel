@@ -5,7 +5,7 @@ import 'package:t_ecommerce_admin_panel/utils/popups/full_screen_loader.dart';
 import 'package:t_ecommerce_admin_panel/utils/popups/loaders.dart';
 
 abstract class TBaseController<T> extends GetxController {
-  RxBool isLoading = true.obs;
+  RxBool isLoading = false.obs;
   RxInt sortColumnIndex = 1.obs;
   RxBool sortAscending = true.obs;
   RxList<T> allItems = <T>[].obs;

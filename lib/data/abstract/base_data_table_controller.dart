@@ -145,13 +145,16 @@ abstract class TBaseController<T> extends GetxController {
       // Delete the item
       await deleteItem(item);
 
+      // Remove the item from the lists
       removeItemFromLists(item);
 
+      // Close the loader
       TFullScreenLoader.stopLoading();
+
+      // Show a success message
       TLoaders.successSnackBar(
-        title: 'Item Deleted',
-        message: 'Your item has been successfully deleted.',
-      );
+          title: 'Item Deleted',
+          message: 'Your item has been successfully deleted.');
     } catch (e) {
       TFullScreenLoader.stopLoading();
       TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());

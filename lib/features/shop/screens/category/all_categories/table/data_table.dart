@@ -14,7 +14,7 @@ class CategoryTable extends StatelessWidget {
     return Obx(
       () {
         Text(controller.filteredItems.length.toString());
-        Text(controller.selectedRows.length.toString());
+        Text(controller.selectRows.length.toString());
 
         return TPaginatedDataTable(
           sortAscending: controller.sortAscending.value,
@@ -29,7 +29,7 @@ class CategoryTable extends StatelessWidget {
             DataColumn2(
               label: const Text('Parent Category'),
               onSort: (columnIndex, ascending) =>
-                  controller.sortByParentCategory(columnIndex, ascending),
+                  controller.sortByProperty(columnIndex, ascending, (category) => category.name),
             ),
             const DataColumn2(
               label: Text('Featured'),

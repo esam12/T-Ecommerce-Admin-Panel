@@ -40,6 +40,8 @@ class BrandsDesktopScreen extends StatelessWidget {
                     TTableHeader(
                       buttonText: 'Create New Brand',
                       onPressed: () => Get.toNamed(TRoutes.createBrand),
+                       searchController: controller.searchTextController,
+                      searchOnChanged: (query) => controller.searchItems(query),
                     ),
                     const SizedBox(height: TSizes.spaceBtwItems),
 

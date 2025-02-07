@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/image_rounded.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/icons/table_action_icon_buttons.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/controllers/brand/brand_controller.dart';
 import 'package:t_ecommerce_admin_panel/routes/routes.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/colors.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/enums.dart';
@@ -12,6 +13,8 @@ import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:t_ecommerce_admin_panel/utils/device/device_utility.dart';
 
 class BrandRows extends DataTableSource {
+  final controller = BrandsController.instance;
+
   @override
   DataRow? getRow(int index) {
     return DataRow2(
@@ -31,7 +34,7 @@ class BrandRows extends DataTableSource {
               const SizedBox(width: TSizes.spaceBtwItems),
               Expanded(
                 child: Text(
-                  'Adidas',
+                  controller.filteredItems[index].name,
                   style: Theme.of(Get.context!)
                       .textTheme
                       .bodyLarge!
@@ -91,13 +94,12 @@ class BrandRows extends DataTableSource {
             ),
           ),
         ),
-        const DataCell(Icon(Iconsax.heart5,color: TColors.primary)),
-        DataCell(Text(DateTime.now().toString())),
+        const DataCell(Icon(Iconsax.heart5, color: TColors.primary)),
+        DataCell(Text(controller.filteredItems[index].createdAt.toString())),
         DataCell(TTableActionButtons(
-          onEditPressed: () => Get.toNamed(TRoutes.editBrand,arguments: ''),
+          onEditPressed: () => Get.toNamed(TRoutes.editBrand, arguments: ''),
           onDeletePressed: () {},
         ))
-
       ],
     );
   }
@@ -106,7 +108,7 @@ class BrandRows extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => 20;
+  int get rowCount => controller.filteredItems.length;
 
   @override
   int get selectedRowCount => 0;

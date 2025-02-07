@@ -17,7 +17,10 @@ class BrandRows extends DataTableSource {
 
   @override
   DataRow? getRow(int index) {
+    final brand = controller.filteredItems[index];
     return DataRow2(
+      selected: controller.selectRows[index],
+      onSelectChanged: (value) => controller.selectRows[index] = value ?? false,
       cells: [
         DataCell(
           Row(
@@ -34,7 +37,7 @@ class BrandRows extends DataTableSource {
               const SizedBox(width: TSizes.spaceBtwItems),
               Expanded(
                 child: Text(
-                  controller.filteredItems[index].name,
+                  brand.name,
                   style: Theme.of(Get.context!)
                       .textTheme
                       .bodyLarge!
@@ -55,50 +58,34 @@ class BrandRows extends DataTableSource {
               scrollDirection: Axis.vertical,
               child: Wrap(
                 spacing: TSizes.xs,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      bottom: TDeviceUtils.isMobileScreen(Get.context!)
-                          ? 0
-                          : TSizes.xs,
-                    ),
-                    child: const Chip(
-                      label: Text('Shoes'),
-                      padding: EdgeInsets.all(TSizes.xs),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      bottom: TDeviceUtils.isMobileScreen(Get.context!)
-                          ? 0
-                          : TSizes.xs,
-                    ),
-                    child: const Chip(
-                      label: Text('TrackSuits'),
-                      padding: EdgeInsets.all(TSizes.xs),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      bottom: TDeviceUtils.isMobileScreen(Get.context!)
-                          ? 0
-                          : TSizes.xs,
-                    ),
-                    child: const Chip(
-                      label: Text('Joggers'),
-                      padding: EdgeInsets.all(TSizes.xs),
-                    ),
-                  ),
-                ],
+                direction: TDeviceUtils.isMobileScreen(Get.context!)
+                    ? Axis.vertical
+                    : Axis.horizontal,
+                children: brand.brandCategories != null
+                    ? brand.brandCategories!
+                        .map((e) => Padding(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      TDeviceUtils.isMobileScreen(Get.context!)
+                                          ? 0
+                                          : TSizes.xs),
+                              child: Chip(
+                                  label: Text(e.name),
+                                  padding: const EdgeInsets.all(TSizes.xs)),
+                            ))
+                        .toList()
+                    : [const SizedBox()],
               ),
             ),
           ),
         ),
-        const DataCell(Icon(Iconsax.heart5, color: TColors.primary)),
-        DataCell(Text(controller.filteredItems[index].createdAt.toString())),
+        DataCell(brand.isFeatured
+            ? const Icon(Iconsax.heart5, color: TColors.primary)
+            : const Icon(Iconsax.heart)),
+        DataCell(Text(brand.createdAt != null ? brand.formattedDate : '')),
         DataCell(TTableActionButtons(
-          onEditPressed: () => Get.toNamed(TRoutes.editBrand, arguments: ''),
-          onDeletePressed: () {},
+          onEditPressed: () => Get.toNamed(TRoutes.editBrand, arguments: brand),
+          onDeletePressed: () => controller.confirmAndDeleteItem(brand),
         ))
       ],
     );
@@ -111,5 +98,5 @@ class BrandRows extends DataTableSource {
   int get rowCount => controller.filteredItems.length;
 
   @override
-  int get selectedRowCount => 0;
+  int get selectedRowCount => controller.selectRows.where((selected) => selected).length;
 }

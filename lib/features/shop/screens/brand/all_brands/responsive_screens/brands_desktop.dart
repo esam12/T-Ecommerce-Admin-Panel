@@ -3,17 +3,18 @@ import 'package:get/get.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/appbar/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/data_table/table_header.dart';
+import 'package:t_ecommerce_admin_panel/common/widgets/loaders/loader_animation.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/controllers/brand/brand_controller.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/brand/all_brands/table/data_table.dart';
 import 'package:t_ecommerce_admin_panel/routes/routes.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
 
-class BrandsDesktop extends StatelessWidget {
-  const BrandsDesktop({super.key});
+class BrandsDesktopScreen extends StatelessWidget {
+  const BrandsDesktopScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-   Get.put(BrandsController());
+    final controller = Get.put(BrandsController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -43,7 +44,13 @@ class BrandsDesktop extends StatelessWidget {
                     const SizedBox(height: TSizes.spaceBtwItems),
 
                     // Table
-                    const BrandTable()
+                    Obx(() {
+                      // Show Loader
+                      if (controller.isLoading.value) {
+                        return const TLoaderAnimation();
+                      }
+                      return const BrandTable();
+                    }),
                   ],
                 ),
               ),

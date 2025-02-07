@@ -28,8 +28,8 @@ class CategoryTable extends StatelessWidget {
             ),
             DataColumn2(
               label: const Text('Parent Category'),
-              onSort: (columnIndex, ascending) =>
-                  controller.sortByProperty(columnIndex, ascending, (category) => category.name),
+              onSort: (columnIndex, ascending) => controller.sortByProperty(
+                  columnIndex, ascending, (category) => category.name),
             ),
             const DataColumn2(
               label: Text('Featured'),

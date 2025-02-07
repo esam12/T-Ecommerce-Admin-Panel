@@ -8,7 +8,7 @@ class BrandsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const TSiteTemplate(
-      desktop: BrandsDesktop(),
+      desktop: BrandsDesktopScreen(),
       // tablet: BrandsTablet(),
       // mobile: BrandsMobile(),
     );

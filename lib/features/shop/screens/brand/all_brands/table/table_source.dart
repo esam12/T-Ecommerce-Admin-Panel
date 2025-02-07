@@ -25,12 +25,15 @@ class BrandRows extends DataTableSource {
         DataCell(
           Row(
             children: [
-              const TRoundedImage(
+              TRoundedImage(
                 width: 50,
                 height: 50,
                 padding: TSizes.sm,
-                imageType: ImageType.asset,
-                image: TImages.adidasLogo,
+                imageType: brand.image.isNotEmpty
+                    ? ImageType.network
+                    : ImageType.asset,
+                image:
+                    brand.image.isNotEmpty ? brand.image : TImages.adidasLogo,
                 borderRaduis: TSizes.borderRadiusMd,
                 backgroundColor: TColors.primaryBackground,
               ),
@@ -62,18 +65,17 @@ class BrandRows extends DataTableSource {
                     ? Axis.vertical
                     : Axis.horizontal,
                 children: brand.brandCategories != null
-                    ? brand.brandCategories!
-                        .map((e) => Padding(
-                              padding: EdgeInsets.only(
-                                  bottom:
-                                      TDeviceUtils.isMobileScreen(Get.context!)
-                                          ? 0
-                                          : TSizes.xs),
-                              child: Chip(
-                                  label: Text(e.name),
-                                  padding: const EdgeInsets.all(TSizes.xs)),
-                            ))
-                        .toList()
+                    ? brand.brandCategories!.map((e) {
+                        return Padding(
+                          padding: EdgeInsets.only(
+                              bottom: TDeviceUtils.isMobileScreen(Get.context!)
+                                  ? 0
+                                  : TSizes.xs),
+                          child: Chip(
+                              label: Text(e.name),
+                              padding: const EdgeInsets.all(TSizes.xs)),
+                        );
+                      }).toList()
                     : [const SizedBox()],
               ),
             ),
@@ -98,5 +100,6 @@ class BrandRows extends DataTableSource {
   int get rowCount => controller.filteredItems.length;
 
   @override
-  int get selectedRowCount => controller.selectRows.where((selected) => selected).length;
+  int get selectedRowCount =>
+      controller.selectRows.where((selected) => selected).length;
 }

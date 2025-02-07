@@ -31,7 +31,7 @@ class BrandRepository extends GetxController {
   /// Fetch all brand categories from the 'BrandCategories' collection
   Future<List<BrandCategoryModel>> getAllBrandCategories() async {
     try {
-      final querySnapshot = await _db.collection('BrandCategories').get();
+      final querySnapshot = await _db.collection('BrandCategory').get();
       return querySnapshot.docs
           .map((doc) => BrandCategoryModel.fromSnapshot(doc))
           .toList();

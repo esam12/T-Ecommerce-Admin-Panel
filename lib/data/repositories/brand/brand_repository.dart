@@ -82,7 +82,6 @@ class BrandRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
-  
 
   /// Create new brand category in the 'BrandCategories' collection
   Future<String> createBrandCategory(BrandCategoryModel brandCategory) async {
@@ -90,6 +89,73 @@ class BrandRepository extends GetxController {
       final result =
           await _db.collection('BrandCategory').add(brandCategory.toJson());
       return result.id;
+    } on FirebaseException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
+  /// Update an existing brand document and its associated brand categories
+  Future<void> updateBrand(BrandModel brand) async {
+    try {
+      await _db.collection('Brands').doc(brand.id).update(brand.toJson());
+    } on FirebaseException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
+  /// Delete an existing brand document and its associated brand categories
+  Future<void> deleteBrand(BrandModel brand) async {
+    try {
+      await _db.runTransaction((transaction) async {
+        final brandRef = _db.collection("Brands").doc(brand.id);
+        final brandSnap = await transaction.get(brandRef);
+
+        if (!brandSnap.exists) {
+          throw Exception('Brand not found');
+        }
+
+        final brandCategoriesSnapshot = await _db
+            .collection('BrandCategory')
+            .where('brandId', isEqualTo: brand.id)
+            .get();
+
+        final brandCategories = brandCategoriesSnapshot.docs
+            .map((doc) => BrandCategoryModel.fromSnapshot(doc));
+        if (brandCategories.isNotEmpty) {
+          for (final brandCategory in brandCategories) {
+            transaction
+                .delete(_db.collection('BrandCategory').doc(brandCategory.id));
+          }
+        }
+        transaction.delete(brandRef);
+      });
+    } on FirebaseException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
+  /// Delete  brand category document in the 'BrandCategory' collection
+  Future<void> deleteBrandCategory(String brandCategoryId) async {
+      try {
+      await _db.collection('BrandCategory').doc(brandCategoryId).delete();
     } on FirebaseException catch (e) {
       throw TFirebaseAuthException(e.code).message;
     } on FormatException catch (_) {

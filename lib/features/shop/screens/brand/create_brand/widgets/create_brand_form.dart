@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/chips/rounded_choice_chips.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/images/image_uploader.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/controllers/brand/create_brand_controller.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/controllers/category/category_controller.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/image_strings.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
@@ -13,10 +16,13 @@ class CreateBrandForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(CreateBrandController());
+
     return TRoundedContainer(
       width: 500,
       padding: const EdgeInsets.all(TSizes.defaultSpace),
       child: Form(
+        key: controller.formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -29,6 +35,7 @@ class CreateBrandForm extends StatelessWidget {
             // Name Text Field
             TextFormField(
               validator: (value) => TValidator.validateEmptyText('Name', value),
+              controller: controller.name,
               decoration: const InputDecoration(
                 labelText: 'Brand Name',
                 prefixIcon: Icon(
@@ -42,55 +49,58 @@ class CreateBrandForm extends StatelessWidget {
             Text('Select Categories',
                 style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: TSizes.spaceBtwInputFields / 2),
-            Wrap(
-              spacing: TSizes.sm,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: TSizes.sm,
-                  ),
-                  child: TChoiceChip(
-                    text: 'Shoes',
-                    selected: true,
-                    onSelected: (value) {},
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: TSizes.sm,
-                  ),
-                  child: TChoiceChip(
-                    text: 'Track Suits',
-                    selected: false,
-                    onSelected: (value) {},
-                  ),
-                ),
-              ],
+            Obx(
+              () => Wrap(
+                spacing: TSizes.sm,
+                children: CategoryController.instance.allItems
+                    .map(
+                      (category) => Padding(
+                        padding: const EdgeInsets.only(bottom: TSizes.sm),
+                        child: TChoiceChip(
+                          text: category.name,
+                          selected:
+                              controller.selectedCategories.contains(category),
+                          onSelected: (value) =>
+                              controller.toggleSelection(category),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
             ),
 
             const SizedBox(height: TSizes.spaceBtwInputFields * 2),
 
             // Image Uploader & Featured Checkbox
-            TImageUploader(
-              width: 80,
-              height: 80,
-              image: TImages.defaultImage,
-              imageType: ImageType.asset,
-              onIconButtonPressed: () {},
+            Obx(
+              () => TImageUploader(
+                width: 80,
+                height: 80,
+                image: controller.imageURL.value.isNotEmpty
+                    ? controller.imageURL.value
+                    : TImages.defaultImage,
+                imageType: controller.imageURL.value.isNotEmpty
+                    ? ImageType.network
+                    : ImageType.asset,
+                onIconButtonPressed: () => controller.pickImage(),
+              ),
             ),
             const SizedBox(height: TSizes.spaceBtwInputFields),
 
-            CheckboxMenuButton(
-              value: true,
-              onChanged: (value) {},
-              child: const Text('Featured'),
+            Obx(
+              () => CheckboxMenuButton(
+                value: controller.isFeatured.value,
+                onChanged: (value) =>
+                    controller.isFeatured.value = value ?? false,
+                child: const Text('Featured'),
+              ),
             ),
             const SizedBox(height: TSizes.spaceBtwInputFields * 2),
 
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () => controller.createBrand(),
                 child: const Text('Create'),
               ),
             ),

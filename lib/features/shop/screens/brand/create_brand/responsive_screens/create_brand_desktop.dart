@@ -4,13 +4,12 @@ import 'package:t_ecommerce_admin_panel/features/shop/screens/brand/create_brand
 import 'package:t_ecommerce_admin_panel/routes/routes.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
 
-
 class CreateBrandDesktopScreen extends StatelessWidget {
   const CreateBrandDesktopScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  const Scaffold(
+    return const Scaffold(
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(TSizes.defaultSpace),
@@ -21,7 +20,7 @@ class CreateBrandDesktopScreen extends StatelessWidget {
               TBreadcrumbWithHeading(
                 returnToPreviousScreen: true,
                 heading: 'Create Brand',
-                breadcrumbItems: [TRoutes.categories, 'Create Brand'],
+                breadcrumbItems: [TRoutes.brands, 'Create Brand'],
               ),
               SizedBox(height: TSizes.spaceBtwSections),
 

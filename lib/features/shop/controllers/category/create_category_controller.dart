@@ -19,9 +19,7 @@ class CreateCategoryController extends GetxController {
   final name = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
-  /// Method to reset fields
 
-  /// Pick Thumbnail Image from Media
 
   /// Register new Category
   Future<void> createCategory() async {
@@ -77,6 +75,7 @@ class CreateCategoryController extends GetxController {
     }
   }
 
+  /// Pick Thumbnail Image from Media
   void pickImage() async {
     final controller = Get.put(MediaController());
     List<ImageModel>? selectedImages = await controller.selectImagesFromMedia();

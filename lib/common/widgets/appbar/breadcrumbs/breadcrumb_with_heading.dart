@@ -74,7 +74,7 @@ class TBreadcrumbWithHeading extends StatelessWidget {
           ],
         ),
         const SizedBox(height: TSizes.sm),
-        
+
         // Heading of the page
         Row(
           children: [

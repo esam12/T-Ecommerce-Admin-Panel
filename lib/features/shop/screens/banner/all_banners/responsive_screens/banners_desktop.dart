@@ -41,7 +41,7 @@ class BannersDesktopScreen extends StatelessWidget {
                       // Table Header
                       TTableHeader(
                         buttonText: 'Create New Banner',
-                        onPressed: () => Get.toNamed(TRoutes.createBrand),
+                        onPressed: () => Get.toNamed(TRoutes.createBanner),
                       ),
                       const SizedBox(height: TSizes.spaceBtwItems),
 

@@ -15,9 +15,9 @@ class BannerModel {
 
   // Convert to a Map<String, dynamic>
   Map<String, dynamic> toJson() => {
-        'imageUrl': imageUrl,
-        'active': active,
-        'targetScreen': targetScreen,
+        'ImageUrl': imageUrl,
+        'Active': active,
+        'TargetScreen': targetScreen,
       };
 
   // Convert from a Map<String, dynamic> to a BannerModel
@@ -25,9 +25,9 @@ class BannerModel {
     final data = snapshot.data() as Map<String, dynamic>;
     return BannerModel(
       id: snapshot.id,
-      imageUrl: data['imageUrl'] ?? '',
-      active: data['active'] ?? false,
-      targetScreen: data['targetScreen'] ?? '',
+      imageUrl: data['ImageUrl'] ?? '',
+      active: data['Active'] ?? false,
+      targetScreen: data['TargetScreen'] ?? '',
     );
   }
 }

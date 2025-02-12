@@ -12,7 +12,7 @@ class RouteObservers extends GetObserver {
     if (previousRoute != null) {
       for (var routeName in TRoutes.sidebarMenuItems) {
         if (previousRoute.settings.name == routeName) {
-          sidebarController.activteItem.value = routeName;
+          sidebarController.activateItem.value = routeName;
         }
       }
     }

@@ -33,7 +33,6 @@ class EditBrandController extends GetxController {
     }
   }
 
-
   /// Toggle Category Selection
   void toggleSelection(CategoryModel category) {
     if (selectedCategories.contains(category)) {

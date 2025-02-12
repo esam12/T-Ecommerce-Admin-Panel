@@ -3,16 +3,29 @@ import 'package:t_ecommerce_admin_panel/routes/routes.dart';
 import 'package:t_ecommerce_admin_panel/utils/device/device_utility.dart';
 
 class SidebarController extends GetxController {
-  final activteItem = TRoutes.dashboard.obs;
+  final activateItem = ''.obs; 
   final hoverItem = ''.obs;
 
-  void changeActiveItem(String route) => activteItem.value = route;
+  @override
+  void onInit() {
+    super.onInit();
+    
+    // Ensure the current route is part of sidebar items, otherwise fallback to default
+    final currentRoute = Get.currentRoute;
+    if (TRoutes.sidebarMenuItems.contains(currentRoute)) {
+      activateItem.value = currentRoute;
+    } else {
+      activateItem.value = TRoutes.dashboard; // Fallback to dashboard
+    }
+  }
+
+  void changeActiveItem(String route) => activateItem.value = route;
 
   void changeHoverItem(String route) {
     if (!isActive(route)) hoverItem.value = route;
   }
 
-  bool isActive(String route) => activteItem.value == route;
+  bool isActive(String route) => activateItem.value == route;
 
   bool isHovering(String route) => hoverItem.value == route;
 

@@ -27,6 +27,7 @@ class ProductDesktopScreen extends StatelessWidget {
                 heading: 'Products',
                 breadcrumbItems: ['Products'],
               ),
+
               const SizedBox(height: TSizes.spaceBtwSections),
 
               //return
@@ -44,6 +45,9 @@ class ProductDesktopScreen extends StatelessWidget {
                         TTableHeader(
                           buttonText: 'Create New Product',
                           onPressed: () => Get.toNamed(TRoutes.createProduct),
+                          searchController: controller.searchTextController,
+                          searchOnChanged: (query) =>
+                              controller.searchItems(query),
                         ),
                         const SizedBox(height: TSizes.spaceBtwItems),
 

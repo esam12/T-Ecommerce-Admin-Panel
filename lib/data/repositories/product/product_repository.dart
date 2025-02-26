@@ -113,4 +113,43 @@ class ProductRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
+
+  /// Delete Product
+  Future<void> deleteProduct(ProductModel product) async {
+    try {
+      // Delete all data at once from firebase firestore
+      await _db.runTransaction((transaction) async {
+        final productRef = _db.collection("Products").doc(product.id);
+        final productSnap = await transaction.get(productRef);
+
+        if (!productSnap.exists) {
+          throw Exception("Product not found");
+        }
+
+        // Fetch ProductCategories
+        final productCategoriesSnapshot = await _db
+            .collection("ProductCategory")
+            .where('productId', isEqualTo: product.id)
+            .get();
+        final productCategories = productCategoriesSnapshot.docs
+            .map((e) => ProductCategoryModel.fromSnapshot(e));
+
+        if (productCategories.isNotEmpty) {
+          for (var productCategory in productCategories) {
+            transaction.delete(
+                _db.collection('ProductCategory').doc(productCategory.id));
+          }
+        }
+        transaction.delete(productRef);
+      });
+    } on FirebaseException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 }

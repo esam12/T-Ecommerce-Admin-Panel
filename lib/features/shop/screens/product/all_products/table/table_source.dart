@@ -8,74 +8,80 @@ import 'package:t_ecommerce_admin_panel/utils/constants/colors.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/image_strings.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/controllers/product/product_controller.dart';
 
 class ProductRows extends DataTableSource {
+  final controller = ProductController.instance;
   @override
   DataRow? getRow(int index) {
+    final product = controller.filteredItems[index];
     return DataRow2(
+      selected: controller.selectRows[index],
+      onTap: () => Get.toNamed(TRoutes.editProduct, arguments: product),
+      onSelectChanged: (value) => controller.selectRows[index] = value ?? false,
       cells: [
         DataCell(
           Row(
             children: [
-              const TRoundedImage(
+              TRoundedImage(
                 width: 50,
                 height: 50,
                 padding: TSizes.sm,
-                imageType: ImageType.asset,
-                image: TImages.acerlogo,
+                imageType: ImageType.network,
+                image: product.thumbnail,
                 borderRaduis: TSizes.borderRadiusMd,
                 backgroundColor: TColors.primaryBackground,
               ),
               const SizedBox(width: TSizes.spaceBtwItems),
-              Expanded(
+              Flexible(
                 child: Text(
-                  'Product Title',
+                  product.title,
                   style: Theme.of(Get.context!)
                       .textTheme
                       .bodyLarge!
                       .apply(color: TColors.primary),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
                 ),
               )
             ],
           ),
         ),
-        const DataCell(Text('256')),
+        DataCell(Text(controller.getProductStockTotal(product))),
+        DataCell(Text(controller.getProductSoldQuantity(product))),
         DataCell(
           Row(
             children: [
-              const TRoundedImage(
+              TRoundedImage(
                 width: 50,
                 height: 50,
                 padding: TSizes.sm,
-                imageType: ImageType.asset,
-                image: TImages.acerlogo,
+                imageType:
+                    product.brand != null ? ImageType.network : ImageType.asset,
+                image: product.brand != null
+                    ? product.brand!.image
+                    : TImages.defaultImage,
                 borderRaduis: TSizes.borderRadiusMd,
                 backgroundColor: TColors.primaryBackground,
               ),
               const SizedBox(width: TSizes.spaceBtwItems),
-              Expanded(
+              Flexible(
                 child: Text(
-                  'Nike',
+                  product.brand != null ? product.brand!.name : '',
                   style: Theme.of(Get.context!)
                       .textTheme
                       .bodyLarge!
                       .apply(color: TColors.primary),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
                 ),
               )
             ],
           ),
         ),
-        const DataCell(Text('\$100.00')),
-        DataCell(Text(DateTime.now().toString())),
+        DataCell(Text('\$${controller.getProductPrice(product)}')),
+        DataCell(Text(product.formattedDate)),
         DataCell(
           TTableActionButtons(
             onEditPressed: () =>
-                Get.toNamed(TRoutes.editProduct, arguments: 'product'),
-            onDeletePressed: () {},
+                Get.toNamed(TRoutes.editProduct, arguments: product),
+            onDeletePressed: () => controller.confirmAndDeleteItem(product),
           ),
         )
       ],

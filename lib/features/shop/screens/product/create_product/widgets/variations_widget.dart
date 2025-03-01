@@ -4,6 +4,10 @@ import 'package:get/get.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/images/image_uploader.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/images/t_rounded_image.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/controllers/product/create_product_controller.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/controllers/product/product_images_controller.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/controllers/product/product_variation_controller.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/models/product_variation_model.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/colors.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/image_strings.dart';
@@ -14,44 +18,61 @@ class ProductVariations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TRoundedContainer(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Product Variations Header
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Product Variations',
-                  style: Theme.of(context).textTheme.headlineSmall),
-              TextButton(
-                onPressed: () {},
-                child: const Text('Remove Variations'),
+    final variationController = ProductVariationController.instance;
+
+    return Obx(
+      () => CreateProductController.instance.productType.value ==
+              ProductType.variable
+          ? TRoundedContainer(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Product Variations Header
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Product Variations',
+                          style: Theme.of(context).textTheme.headlineSmall),
+                      TextButton(
+                        onPressed: () =>
+                            variationController.removeVariation(context),
+                        child: const Text('Remove Variations'),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: TSizes.spaceBtwItems),
+
+                  // Variations List
+                  if (variationController.productVariations.isNotEmpty)
+                    ListView.separated(
+                      itemCount: variationController.productVariations.length,
+                      shrinkWrap: true,
+                      separatorBuilder: (_, __) =>
+                          const SizedBox(height: TSizes.spaceBtwItems),
+                      itemBuilder: (_, index) {
+                        final variation =
+                            variationController.productVariations[index];
+
+                        return _buildVariationTile(
+                            context, index, variation, variationController);
+                      },
+                    ),
+
+                  // No Variation Message
+                  _buildNoVariationMessage(),
+                ],
               ),
-            ],
-          ),
-          const SizedBox(height: TSizes.spaceBtwItems),
-
-          // Variations List
-          ListView.separated(
-            itemCount: 2,
-            shrinkWrap: true,
-            separatorBuilder: (_, __) =>
-                const SizedBox(height: TSizes.spaceBtwItems),
-            itemBuilder: (_, index) {
-              return _buildVariationTile();
-            },
-          ),
-
-          // No Variation Message
-          _buildNoVariationMessage(),
-        ],
-      ),
+            )
+          : const SizedBox.shrink(),
     );
   }
 
   // Helper Method to build a variation tile
-  Widget _buildVariationTile() {
+  Widget _buildVariationTile(
+      BuildContext context,
+      int index,
+      ProductVariationModel variation,
+      ProductVariationController variationController) {
     return ExpansionTile(
       backgroundColor: TColors.lightGrey,
       collapsedBackgroundColor: TColors.lightGrey,
@@ -60,16 +81,23 @@ class ProductVariations extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(TSizes.borderRadiusLg),
       ),
-      title: const Text('Color: Green'),
+      title: Text(variation.attributeValues.entries
+          .map((entry) => '${entry.key}: ${entry.value}')
+          .join(', ')),
       children: [
         // Upload Variation Image
         Obx(
           () => TImageUploader(
             right: 0,
             left: null,
-            imageType: ImageType.asset,
-            image: TImages.defaultImage,
-            onIconButtonPressed: () {},
+            imageType: variation.image.value.isNotEmpty
+                ? ImageType.network
+                : ImageType.asset,
+            image: variation.image.value.isNotEmpty
+                ? variation.image.value
+                : TImages.defaultImage,
+            onIconButtonPressed: () => ProductImagesController.instance
+                .selectVariationImage(variation),
           ),
         ),
         const SizedBox(height: TSizes.spaceBtwInputFields),
@@ -79,7 +107,9 @@ class ProductVariations extends StatelessWidget {
           children: [
             Expanded(
               child: TextFormField(
+                onChanged: (value) => variation.stock = int.parse(value),
                 keyboardType: TextInputType.number,
+                controller: variationController.stockControllersList[index][variation],
                 inputFormatters: <TextInputFormatter>[
                   FilteringTextInputFormatter.digitsOnly
                 ],
@@ -93,6 +123,8 @@ class ProductVariations extends StatelessWidget {
             // Price
             Expanded(
               child: TextFormField(
+                onChanged: (value) => variation.price = double.parse(value),
+                controller: variationController.priceControllersList[index][variation],
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: <TextInputFormatter>[
@@ -111,6 +143,8 @@ class ProductVariations extends StatelessWidget {
 
         // Variation Description
         TextFormField(
+          onChanged: (value) => variation.description = value,
+          controller: variationController.descriptionControllersList[index][variation],
           decoration: const InputDecoration(
             labelText: 'Description',
             hintText: 'Add Description of this variation...',
@@ -135,9 +169,8 @@ class ProductVariations extends StatelessWidget {
                 image: TImages.defaultVariationImageIcon),
           ],
         ),
-         SizedBox(width: TSizes.spaceBtwItems),
-         Text('There are no variations added for this product'),
-
+        SizedBox(width: TSizes.spaceBtwItems),
+        Text('There are no variations added for this product'),
       ],
     );
   }

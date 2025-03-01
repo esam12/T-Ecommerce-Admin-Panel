@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/appbar/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/controllers/product/product_images_controller.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/additional_images.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/attributes_widget.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/product/create_product/widgets/bottom_navigation_widget.dart';
@@ -22,6 +23,7 @@ class CreateProductDesktopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ProductImagesController());
     return Scaffold(
       bottomNavigationBar: const ProductBottomNavigationButtons(),
       body: SingleChildScrollView(
@@ -104,9 +106,9 @@ class CreateProductDesktopScreen extends StatelessWidget {
                               const SizedBox(height: TSizes.spaceBtwItems),
                               ProductAdditionalImages(
                                 additionalProductImagesURLs:
-                                    RxList<String>.empty(),
-                                onTapToAddImages: () {},
-                                onTapToRemoveImage: (index) {},
+                                    controller.additionalProductImagesUrls,
+                                onTapToAddImages: () => controller.selectMultipleProductImages(),
+                                onTapToRemoveImage: (index) => controller.removeImage(index),
                               ),
                             ],
                           ),

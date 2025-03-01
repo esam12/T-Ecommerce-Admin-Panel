@@ -5,6 +5,7 @@ import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_contai
 import 'package:t_ecommerce_admin_panel/common/widgets/images/t_rounded_image.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/controllers/product/create_product_controller.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/controllers/product/product_attributes_controller.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/controllers/product/product_variation_controller.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/colors.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/image_strings.dart';
@@ -20,6 +21,7 @@ class ProductAttributes extends StatelessWidget {
     // Controllers
     final productController = CreateProductController.instance;
     final attributeController = Get.put(ProductAttributesController());
+    final variationController = Get.put(ProductVariationController());
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,7 +142,7 @@ class ProductAttributes extends StatelessWidget {
             child: SizedBox(
               width: 200,
               child: ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () => variationController.generateVariationsConfirmation(context),
                 icon: const Icon(Iconsax.activity),
                 label: const Text('Generate Variations'),
               ),

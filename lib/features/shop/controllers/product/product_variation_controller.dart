@@ -78,7 +78,7 @@ class ProductVariationController extends GetxController {
   }
 
   // Function to generate variations with a confirmation dialog
-  generateVariations(BuildContext context) {
+  generateVariationsConfirmation(BuildContext context) {
     // Show confirmation dialog
     TDialogs.defaultDialog(
       context: context,
@@ -143,6 +143,36 @@ class ProductVariationController extends GetxController {
     }
     // Assign the generated variations to productVariations list
     productVariations.assignAll(variations);
+  }
+
+  // Get all combinations of attribute values
+  List<List<String>> getCombinations(List<List<String>> lists) {
+    // The result list that will store all combinations
+    final List<List<String>> result = [];
+
+    // Start combining attribute from the first one
+    combine(lists, 0, <String>[], result);
+
+    // Return the final list of combinations
+    return result;
+  }
+
+  // Helper function to recursively combine attribute values
+  void combine(List<List<String>> lists, int index, List<String> current,
+      List<List<String>> result) {
+    // If we have reached the end of the lists, add the current combination to the result
+    if (index == lists.length) {
+      result.add(List.from(current));
+    }
+
+    // Iterate over the values of the current attribute
+    for (final item in lists[index]) {
+      // Generate an updated list with the current value added
+      final List<String> updated = List.from(current)..add(item);
+
+      // Recursively combine with the next attribute
+      combine(lists, index + 1, updated, result);
+    }
   }
 
   // Function to reset all values

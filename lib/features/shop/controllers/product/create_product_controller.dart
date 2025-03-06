@@ -168,6 +168,35 @@ class CreateProductController extends GetxController {
     }
   }
 
+  // Show the progress dialog
+  void showProgressDialog() {
+    showDialog(
+      context: Get.context!,
+      barrierDismissible: false,
+      builder: (context) => PopScope(
+        canPop: false,
+        child: AlertDialog(
+          title: const Text('Creating Product'),
+          content: Obx(() => Column(
+                children: [
+                  Image.asset(TImages.creatingProductIllustration,
+                      height: 200, width: 200),
+                  const SizedBox(height: TSizes.spaceBtwItems),
+                  buildCheckBox('Thumbnail Image', thumbnailUploader),
+                  buildCheckBox('Additional Images', additionalImagesUploader),
+                  buildCheckBox('Product Data, Attributes & Variations',
+                      productDataUploader),
+                  buildCheckBox(
+                      'Product Categories', categoriesRelationshipUploader),
+                  const SizedBox(height: TSizes.spaceBtwItems),
+                  const Text('Sit Tight, Your product is uploading...')
+                ],
+              )),
+        ),
+      ),
+    );
+  }
+
   // Build a Checkbox widget
   Widget buildCheckBox(String lable, RxBool value) {
     return Row(
@@ -197,18 +226,40 @@ class CreateProductController extends GetxController {
           },
           child: const Text('Go to Products'),
         )
-        
       ],
-      content: Column(children: [
-        Image.asset(TImages.productsIllustration,height: 200,width: 200),
-        const SizedBox(height: TSizes.spaceBtwItems),
-        Text('Congratulations',style: Theme.of(Get.context!).textTheme.headlineSmall),
-        const SizedBox(height: TSizes.spaceBtwItems),
-        const Text('Your Product has been created.'),
-
-      ],),
+      content: Column(
+        children: [
+          Image.asset(TImages.productsIllustration, height: 200, width: 200),
+          const SizedBox(height: TSizes.spaceBtwItems),
+          Text('Congratulations',
+              style: Theme.of(Get.context!).textTheme.headlineSmall),
+          const SizedBox(height: TSizes.spaceBtwItems),
+          const Text('Your Product has been created.'),
+        ],
+      ),
     ));
   }
 
-  // 
+  // Reset from values and flags
+  void resetAllValues() {
+    isLoading.value = false;
+    productType.value = ProductType.single;
+    productVisibility.value = ProductVisibility.hidden;
+    stockPriceFormKey.currentState?.reset();
+    titleDescriptionFormKey.currentState?.reset();
+    title.clear();
+    description.clear();
+    stock.clear();
+    price.clear();
+    salePrice.clear();
+    selectedBrand.value = null;
+    selectedCategories.clear();
+    ProductAttributesController.instance.resetProductAttributes();
+
+    // Reset Upload Flags
+    thumbnailUploader.value = false;
+    additionalImagesUploader.value = false;
+    productDataUploader.value = false;
+    categoriesRelationshipUploader.value = false;
+  }
 }

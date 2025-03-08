@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/models/product_model.dart';
 import 'package:t_ecommerce_admin_panel/routes/routes.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:t_ecommerce_admin_panel/utils/device/device_utility.dart';
@@ -19,7 +20,9 @@ import '../widgets/brand_widget.dart';
 import '../widgets/categories_widget.dart';
 
 class EditProductDesktopScreen extends StatelessWidget {
-  const EditProductDesktopScreen({super.key});
+  const EditProductDesktopScreen({super.key, required this.product});
+
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +121,7 @@ class EditProductDesktopScreen extends StatelessWidget {
                         const SizedBox(height: TSizes.spaceBtwSections),
 
                         // Product Categories
-                        const ProductCategories(),
+                        ProductCategories(product: product),
                         const SizedBox(height: TSizes.spaceBtwSections),
 
                         // Product Visibility

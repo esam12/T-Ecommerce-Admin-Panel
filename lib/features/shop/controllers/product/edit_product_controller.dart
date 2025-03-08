@@ -46,8 +46,8 @@ class EditProductController extends GetxController {
   TextEditingController brandTextField = TextEditingController();
 
   // Rx observables for selected brand and categories
-  Rx<BrandModel?> selectedBrand = Rx<BrandModel?>(null);
-  RxList<CategoryModel> selectedCategories = <CategoryModel>[].obs;
+  final Rx<BrandModel?> selectedBrand = Rx<BrandModel?>(null);
+  final RxList<CategoryModel> selectedCategories = <CategoryModel>[].obs;
   final List<CategoryModel> alreadyAddedCategories = <CategoryModel>[];
 
   // Flags for tracking different tasks
@@ -129,7 +129,7 @@ class EditProductController extends GetxController {
   }
 
   // Function to create a new product
-  Future<void> editProduct() async {
+  Future<void> editProduct(ProductModel product) async {
     try {
       // Show progress dialog
       showProgressDialog();
@@ -181,62 +181,74 @@ class EditProductController extends GetxController {
       }
 
       // Upload Product Thumbnail Image
-      thumbnailUploader.value = true;
       final imagesController = ProductImagesController.instance;
-      if (imagesController.selectedThumbnailImage.value == null) {
+      if (imagesController.selectedThumbnailImage.value == null ||
+          imagesController.selectedThumbnailImage.value!.isEmpty) {
         throw 'Select Product Thumbnail Image';
       }
 
-      // Additional Product Images
-      additionalImagesUploader.value = true;
-
       // Product Variation Images
       final variations = ProductVariationController.instance.productVariations;
-      if (productType.value == ProductType.variable && variations.isNotEmpty) {
+      if (productType.value == ProductType.single && variations.isNotEmpty) {
         // If admin added variations and then changed the Product Type, remove all variations
         ProductVariationController.instance.resetAllValues();
         variations.value = [];
       }
 
-      // Map Product Data to ProductModel
-      final newRecord = ProductModel(
-        id: '',
-        sku: '',
-        isFeatured: true,
-        title: title.text.trim(),
-        brand: selectedBrand.value,
-        productVariations: variations,
-        description: description.text.trim(),
-        productType: productType.value.toString(),
-        stock: int.tryParse(stock.text.trim()) ?? 0,
-        price: double.tryParse(price.text.trim()) ?? 0.0,
-        images: imagesController.additionalProductImagesUrls,
-        salePrice: double.tryParse(salePrice.text.trim()) ?? 0.0,
-        thumbnail: imagesController.selectedThumbnailImage.value ?? '',
-        productAttributes:
-            ProductAttributesController.instance.productAttributes,
-        date: DateTime.now(),
-      );
+      product.sku = '';
+      product.isFeatured = true;
+      product.title = title.text.trim();
+      product.brand = selectedBrand.value;
+      product.description = description.text.trim();
+      product.productType = productType.value.toString();
+      product.stock = int.tryParse(stock.text.trim()) ?? 0;
+      product.price = double.tryParse(price.text.trim()) ?? 0.0;
+      product.images = imagesController.additionalProductImagesUrls;
+      product.salePrice = double.tryParse(salePrice.text.trim()) ?? 0.0;
+      product.thumbnail = imagesController.selectedThumbnailImage.value ?? '';
+      product.productAttributes =
+          ProductAttributesController.instance.productAttributes;
+      product.productVariations = variations;
 
-      // Call Repository to Create New Product
+      // Call Repository to Update New Product
       productDataUploader.value = true;
-      newRecord.id = await productRepository.createProduct(newRecord);
+      await productRepository.updateProduct(product);
 
       // Register product categories if any
       if (selectedCategories.isNotEmpty) {
-        if (newRecord.id.isEmpty) throw 'Error storing data. Try again';
-
         // Loop through selected Product Categories
         categoriesRelationshipUploader.value = true;
+
+        // Get the existing category Ids
+        List<String> existingCategoryIds =
+            alreadyAddedCategories.map((category) => category.id!).toList();
         for (var category in selectedCategories) {
-          // Map Data
-          final productCategory = ProductCategoryModel(
-              productId: newRecord.id, categoryId: category.id!);
-          await productRepository.createProductCategory(productCategory);
+          // Check if the category is not already associated with the product
+          if (!existingCategoryIds.contains(category.id)) {
+            // Map Data
+            final productCategory = ProductCategoryModel(
+              productId: product.id,
+              categoryId: category.id!,
+            );
+            await productRepository.createProductCategory(productCategory);
+          }
+        }
+        // Remove categories not selected by the user
+        for (var existingCategoryId in existingCategoryIds) {
+          // Check if the category is not present in the selected categories
+          if (!selectedCategories
+              .any((category) => category.id == existingCategoryId)) {
+            // Remove the association
+            await productRepository.removeProductCategory(
+                product.id, existingCategoryId);
+          }
         }
       }
       // update Product List
-      ProductController.instance.addItemToList(newRecord);
+      ProductController.instance.updateItemFromLists(product);
+
+      // Reset Form Values
+      // resetAllValues();
 
       // Close he Progress Dialog
       TFullScreenLoader.stopLoading();
@@ -315,7 +327,7 @@ class EditProductController extends GetxController {
           Text('Congratulations',
               style: Theme.of(Get.context!).textTheme.headlineSmall),
           const SizedBox(height: TSizes.spaceBtwItems),
-          const Text('Your Product has been created.'),
+          const Text('Your Product has been updated.'),
         ],
       ),
     ));

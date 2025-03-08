@@ -114,6 +114,27 @@ class ProductRepository extends GetxController {
     }
   }
 
+  /// Remove Product Category
+  Future<void> removeProductCategory(
+      String productId, String categoryId) async {
+    try {
+      final result = await _db
+          .collection("productCategory")
+          .where('productId', isEqualTo: productId)
+          .where('categoryId', isEqualTo: categoryId)
+          .get();
+      for (final doc in result.docs) {
+        await doc.reference.delete();
+      }
+    } on FirebaseException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
   /// Delete Product
   Future<void> deleteProduct(ProductModel product) async {
     try {

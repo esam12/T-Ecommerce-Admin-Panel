@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
-import 'package:t_ecommerce_admin_panel/features/shop/controllers/category/edit_category_controller.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/controllers/product/edit_product_controller.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/models/product_model.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';

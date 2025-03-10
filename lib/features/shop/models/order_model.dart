@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/models/address_model.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/models/cart_model.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/enums.dart';
@@ -80,4 +81,35 @@ class OrderModel {
         'items': items.map((e) => e.toJson()).toList(),
         'deliveryDate': deliveryDate,
       };
+
+  // From snapshot
+  factory OrderModel.fromSnapshot(DocumentSnapshot snapshot) {
+    final data = snapshot.data() as Map<String, dynamic>;
+    return OrderModel(
+      id: data['id'],
+      userId: data['userId'],
+      docId: data['docId'],
+      orderStatus: OrderStatus.values.byName(data['orderStatus']),
+      totalAmount: data['totalAmount'],
+      orderDate: (data['orderDate'] as Timestamp).toDate(),
+      paymentMethod: data['paymentMethod'],
+      shippingCost: data['shippingCost'],
+      taxCost: data['taxCost'],
+      shippingAddress: data['shippingAddress'] != null
+          ? AddressModel.fromSnapshot(data['shippingAddress'])
+          : null,
+      billingAddress: data['billingAddress'] != null
+          ? AddressModel.fromSnapshot(data['billingAddress'])
+          : null,
+      billingAddressSameAsShipping: data['billingAddressSameAsShipping'],
+      items: data['items'] != null
+          ? List<CartItemModel>.from(
+              data['items'].map((e) => CartItemModel.fromJson(e)))
+          : [],
+      deliveryDate: data['deliveryDate'] != null
+          ? (data['deliveryDate'] as Timestamp).toDate()
+          : null,
+    );
+  }
 }
+

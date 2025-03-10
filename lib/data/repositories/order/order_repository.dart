@@ -45,4 +45,20 @@ class OrderRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
+
+  // Update a specific value of an order instance
+  Future<void> updateOrderSpecificValue(
+      String orderId, Map<String, dynamic> data) async {
+    try {
+      await _db.collection('Orders').doc(orderId).update(data);
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 }

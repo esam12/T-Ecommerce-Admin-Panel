@@ -1,3 +1,4 @@
+import 'package:t_ecommerce_admin_panel/features/shop/models/address_model.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/models/cart_model.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:t_ecommerce_admin_panel/utils/helpers/helper_functions.dart';
@@ -6,26 +7,33 @@ class OrderModel {
   final String id;
   final String userId;
   final String docId;
-
-  final OrderStatus orderStatus;
+  OrderStatus orderStatus;
   final num totalAmount;
+  final double shippingCost;
+  final double taxCost;
   final DateTime orderDate;
-  final PaymentMethods paymentMethod;
-  // final AddressModel address;
+  final String paymentMethod;
+  final AddressModel? shippingAddress;
+  final AddressModel? billingAddress;
   final List<CartItemModel> items;
   final DateTime? deliveryDate;
+  final bool billingAddressSameAsShipping;
 
   OrderModel({
     required this.id,
     this.userId = '',
     this.docId = '',
     required this.orderStatus,
-    this.items = const [],
+    required this.items,
     required this.totalAmount,
+    required this.shippingCost,
+    required this.taxCost,
     required this.orderDate,
-    this.paymentMethod = PaymentMethods.paypal,
-    // this.address,
+    this.paymentMethod = "Cash on Delivery",
+    this.shippingAddress,
+    this.billingAddress,
     this.deliveryDate,
+    this.billingAddressSameAsShipping = true,
   });
 
   String get formattedOrderDate => THelperFunctions.getFormattedDate(orderDate);
@@ -49,7 +57,9 @@ class OrderModel {
       orderStatus: OrderStatus.pending,
       totalAmount: 0,
       orderDate: DateTime.now(),
-      paymentMethod: PaymentMethods.paypal,
+      shippingCost: 0,
+      taxCost: 0,
+      items: [],
       deliveryDate: null,
     );
   }
@@ -61,7 +71,13 @@ class OrderModel {
         'orderStatus': orderStatus.name,
         'totalAmount': totalAmount,
         'orderDate': orderDate,
-        'paymentMethod': paymentMethod.name,
+        'paymentMethod': paymentMethod,
+        'shippingCost': shippingCost,
+        'taxCost': taxCost,
+        'shippingAddress': shippingAddress?.toJson(),
+        'billingAddress': billingAddress?.toJson(),
+        'billingAddressSameAsShipping': billingAddressSameAsShipping,
+        'items': items.map((e) => e.toJson()).toList(),
         'deliveryDate': deliveryDate,
       };
 }

@@ -68,8 +68,7 @@ class OrderModel {
   Map<String, dynamic> toJson() => {
         'id': id,
         'userId': userId,
-        'docId': docId,
-        'orderStatus': orderStatus.name,
+        'orderStatus': orderStatus.toString(),
         'totalAmount': totalAmount,
         'orderDate': orderDate,
         'paymentMethod': paymentMethod,
@@ -86,30 +85,46 @@ class OrderModel {
   factory OrderModel.fromSnapshot(DocumentSnapshot snapshot) {
     final data = snapshot.data() as Map<String, dynamic>;
     return OrderModel(
-      id: data['id'],
-      userId: data['userId'],
-      docId: data['docId'],
-      orderStatus: OrderStatus.values.byName(data['orderStatus']),
-      totalAmount: data['totalAmount'],
-      orderDate: (data['orderDate'] as Timestamp).toDate(),
-      paymentMethod: data['paymentMethod'],
-      shippingCost: data['shippingCost'],
-      taxCost: data['taxCost'],
-      shippingAddress: data['shippingAddress'] != null
-          ? AddressModel.fromSnapshot(data['shippingAddress'])
-          : null,
-      billingAddress: data['billingAddress'] != null
-          ? AddressModel.fromSnapshot(data['billingAddress'])
-          : null,
-      billingAddressSameAsShipping: data['billingAddressSameAsShipping'],
-      items: data['items'] != null
-          ? List<CartItemModel>.from(
-              data['items'].map((e) => CartItemModel.fromJson(e)))
+      id: data.containsKey('id') ? data['id'] as String : '',
+      userId: data.containsKey('userId') ? data['userId'] as String : '',
+      docId: snapshot.id,
+      orderStatus: data.containsKey('orderStatus')
+          ? OrderStatus.values.firstWhere(
+              (element) => element.toString() == data['orderStatus'])
+          : OrderStatus.pending,
+      totalAmount:
+          data.containsKey('totalAmount') ? data['totalAmount'] as num : 0,
+      shippingCost: data.containsKey('shippingCost')
+          ? (data['shippingCost'] as num).toDouble()
+          : 0,
+      taxCost:
+          data.containsKey('taxCost') ? (data['taxCost'] as num).toDouble() : 0,
+      orderDate: data.containsKey('orderDate')
+          ? (data['orderDate'] as Timestamp).toDate()
+          : DateTime.now(),
+      paymentMethod: data.containsKey('paymentMethod')
+          ? data['paymentMethod'] as String
+          : "",
+      billingAddressSameAsShipping:
+          data.containsKey('billingAddressSameAsShipping')
+              ? data['billingAddressSameAsShipping'] as bool
+              : true,
+      shippingAddress: data.containsKey('shippingAddress')
+          ? AddressModel.fromMap(
+              data['shippingAddress'] as Map<String, dynamic>)
+          : AddressModel.empty(),
+      billingAddress: data.containsKey('billingAddress')
+          ? AddressModel.fromMap(data['billingAddress'] as Map<String, dynamic>)
+          : AddressModel.empty(),
+      items: data.containsKey('items')
+          ? (data['items'] as List<dynamic>)
+              .map((e) => CartItemModel.fromJson(e as Map<String, dynamic>))
+              .toList()
           : [],
-      deliveryDate: data['deliveryDate'] != null
-          ? (data['deliveryDate'] as Timestamp).toDate()
-          : null,
+      deliveryDate:
+          data.containsKey('deliveryDate') && data['deliveryDate'] != null
+              ? (data['deliveryDate'] as Timestamp).toDate()
+              : null,
     );
   }
 }
-

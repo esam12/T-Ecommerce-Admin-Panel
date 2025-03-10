@@ -1,31 +1,51 @@
 class CartItemModel {
-  final String id;
-  final String title;
-  final String? image;
-  final int quantity;
-  final double price;
-  final num totalAmount;
-  final Map<String, dynamic>? selectedVariation;
+  String productId;
+  String title;
+  String? image;
+  int quantity;
+  double price;
+  String variationId;
+  String? brandName;
+  Map<String, String>? selectedVariation;
 
   CartItemModel({
-    required this.id,
-    required this.title,
-    this.image,
+    required this.productId,
     required this.quantity,
-    required this.price,
-    required this.totalAmount,
+    this.title = '',
+    this.image,
+    this.price = 0.0,
+    this.variationId = '',
+    this.brandName,
     this.selectedVariation,
   });
 
-  // Empty Cart Item
-  static CartItemModel empty() {
-    return CartItemModel(
-      id: '',
-      title: '',
-      image: '',
-      quantity: 0,
-      price: 0,
-      totalAmount: 0,
-    );
-  }
+  /// Calculate Total Amount
+  String get totalAmount => (price * quantity).toStringAsFixed(1);
+
+  /// Empty Cart Item
+  static CartItemModel empty() => CartItemModel(productId: '', quantity: 0);
+
+  /// Convert CartItemModel to a JSON Map
+  Map<String, dynamic> toJson() => {
+        'ProductId': productId,
+        'Title': title,
+        'Image': image,
+        'Quantity': quantity,
+        'Price': price,
+        'VariationId': variationId,
+        'BrandName': brandName,
+        'SelectedVariation': selectedVariation,
+      };
+
+  /// Create a CartItem from a Json Map
+  factory CartItemModel.fromJson(Map<String, dynamic> json) => CartItemModel(
+        productId: json['ProductId'],
+        title: json['Title'],
+        image: json['Image'],
+        quantity: json['Quantity'],
+        price: json['Price']?.toDouble(),
+        variationId: json['VariationId'],
+        brandName: json['BrandName'],
+        selectedVariation: json['SelectedVariation'] != null ? Map.from(json['SelectedVariation']) : null,
+      );
 }

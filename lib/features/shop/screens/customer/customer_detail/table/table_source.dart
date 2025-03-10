@@ -13,10 +13,15 @@ class CustomerOrdersRows extends DataTableSource {
   @override
   DataRow? getRow(int index) {
     final order = OrderModel(
-      id: 'id',
-      orderStatus: OrderStatus.shipped,
-      totalAmount: 235.5,
+      id: '1',
+      orderStatus: OrderStatus.delivered,
       orderDate: DateTime.now(),
+      items: [],
+      totalAmount: 0,
+      userId: '',
+      docId: '',
+      shippingCost: 0,
+      taxCost: 0,
     );
     const totalAmount = '2563.5';
 

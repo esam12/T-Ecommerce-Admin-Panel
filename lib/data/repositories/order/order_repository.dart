@@ -61,4 +61,19 @@ class OrderRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
+
+  // Delete an order
+  Future<void> deleteOrder(String orderId) async {
+    try {
+      await _db.collection('Orders').doc(orderId).delete();
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 }

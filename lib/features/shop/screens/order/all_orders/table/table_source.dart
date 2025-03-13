@@ -17,7 +17,7 @@ class OrdersRows extends DataTableSource {
 
     return DataRow2(
       onTap: () => Get.toNamed(TRoutes.orderDetails,
-          arguments: order, parameters: {'orderId': order.id}),
+          arguments: order, parameters: {'orderId': order.docId}),
       selected: controller.selectRows[index],
       onSelectChanged: (value) => controller.selectRows[index] = value ?? false,
       cells: [
@@ -53,7 +53,7 @@ class OrdersRows extends DataTableSource {
           view: true,
           edit: false,
           onViewPressed: () => Get.toNamed(TRoutes.orderDetails,
-              arguments: order, parameters: {'orderId': order.id}),
+              arguments: order, parameters: {'orderId': order.docId}),
           onDeletePressed: () => controller.confirmAndDeleteItem(order),
         ))
       ],

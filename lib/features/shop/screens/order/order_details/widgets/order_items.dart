@@ -7,7 +7,6 @@ import 'package:t_ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/image_strings.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:t_ecommerce_admin_panel/utils/device/device_utility.dart';
-import 'package:t_ecommerce_admin_panel/utils/helpers/pricing_calculator.dart';
 
 class OrderItems extends StatelessWidget {
   const OrderItems({super.key, required this.order});
@@ -130,7 +129,7 @@ class OrderItems extends StatelessWidget {
                     Text('Shipping',
                         style: Theme.of(context).textTheme.titleLarge),
                     Text(
-                        '\$${TPricingCalculator.calculateShippingCost(subTotal, '')}',
+                        '\$${order.shippingCost.toStringAsFixed(2)}',
                         style: Theme.of(context).textTheme.titleLarge),
                   ],
                 ),
@@ -139,7 +138,7 @@ class OrderItems extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('Tax', style: Theme.of(context).textTheme.titleLarge),
-                    Text('\$${TPricingCalculator.calculateTax(subTotal, '')}',
+                    Text( '\$${order.taxCost.toStringAsFixed(2)}',
                         style: Theme.of(context).textTheme.titleLarge),
                   ],
                 ),
@@ -152,7 +151,7 @@ class OrderItems extends StatelessWidget {
                     Text('Total',
                         style: Theme.of(context).textTheme.titleLarge),
                     Text(
-                        '\$${TPricingCalculator.calculateTotalPrice(subTotal, '')}',
+                         '\$${order.totalAmount.toStringAsFixed(2)}',
                         style: Theme.of(context).textTheme.titleLarge),
                   ],
                 ),

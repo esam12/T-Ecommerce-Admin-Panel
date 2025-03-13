@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/images/t_rounded_image.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/controllers/order/order_detail_controller.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/models/order_model.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/colors.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/enums.dart';
@@ -13,7 +15,12 @@ class OrderCustomer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(OrderDetailController());
+    controller.order.value = order;
+    controller.getCustomerOfCurrentOrder();
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Personal Information
         TRoundedContainer(
@@ -24,34 +31,45 @@ class OrderCustomer extends StatelessWidget {
               Text('Customer',
                   style: Theme.of(context).textTheme.headlineMedium),
               const SizedBox(height: TSizes.spaceBtwSections),
-              Row(
-                children: [
-                  const TRoundedImage(
-                    padding: 0,
-                    backgroundColor: TColors.primaryBackground,
-                    imageType: ImageType.asset,
-                    image: TImages.user,
-                  ),
-                  const SizedBox(width: TSizes.spaceBtwItems),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'ISAM ELZOBI',
-                          style: Theme.of(context).textTheme.titleLarge,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
+              Obx(
+                () {
+                  return Row(
+                    children: [
+                      TRoundedImage(
+                        padding: 0,
+                        backgroundColor: TColors.primaryBackground,
+                        imageType:
+                            controller.customer.value.profilePicture.isNotEmpty
+                                ? ImageType.network
+                                : ImageType.asset,
+                        image:
+                            controller.customer.value.profilePicture.isNotEmpty
+                                ? controller.customer.value.profilePicture
+                                : TImages.user,
+                      ),
+                      const SizedBox(width: TSizes.spaceBtwItems),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              controller.customer.value.fullName,
+                              style: Theme.of(context).textTheme.titleLarge,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                            Text(
+                              controller.customer.value.email,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ],
                         ),
-                        const Text(
-                          'support@codingwithiso.com',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                      ),
+                    ],
+                  );
+                },
               ),
             ],
           ),
@@ -59,25 +77,30 @@ class OrderCustomer extends StatelessWidget {
         const SizedBox(height: TSizes.spaceBtwSections),
 
         // Contact Information
-        SizedBox(
-          width: double.infinity,
-          child: TRoundedContainer(
-            padding: const EdgeInsets.all(TSizes.defaultSpace),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Contact Person',
-                    style: Theme.of(context).textTheme.headlineMedium),
-                const SizedBox(height: TSizes.spaceBtwSections),
-                Text('Coding with ISO',
-                    style: Theme.of(context).textTheme.titleLarge),
-                const SizedBox(height: TSizes.spaceBtwSections),
-                Text('support@codingwithiso.com',
-                    style: Theme.of(context).textTheme.titleLarge),
-                const SizedBox(height: TSizes.spaceBtwSections),
-                Text('+90 *** *** ** **',
-                    style: Theme.of(context).textTheme.titleLarge),
-              ],
+        Obx(
+          () => SizedBox(
+            width: double.infinity,
+            child: TRoundedContainer(
+              padding: const EdgeInsets.all(TSizes.defaultSpace),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Contact Person',
+                      style: Theme.of(context).textTheme.headlineMedium),
+                  const SizedBox(height: TSizes.spaceBtwSections),
+                  Text(controller.customer.value.fullName,
+                      style: Theme.of(context).textTheme.titleLarge),
+                  const SizedBox(height: TSizes.spaceBtwSections),
+                  Text(controller.customer.value.email,
+                      style: Theme.of(context).textTheme.titleLarge),
+                  const SizedBox(height: TSizes.spaceBtwSections),
+                  Text(
+                      controller.customer.value.formattedPhoneNo.isNotEmpty
+                          ? controller.customer.value.formattedPhoneNo
+                          : '+90 *** *** ** **',
+                      style: Theme.of(context).textTheme.titleLarge),
+                ],
+              ),
             ),
           ),
         ),
@@ -94,11 +117,16 @@ class OrderCustomer extends StatelessWidget {
                 Text('Shipping Address',
                     style: Theme.of(context).textTheme.headlineMedium),
                 const SizedBox(height: TSizes.spaceBtwSections),
-                Text('ISAM ELZOBI',
+                Text(
+                    order.shippingAddress != null
+                        ? order.shippingAddress!.name
+                        : '',
                     style: Theme.of(context).textTheme.titleSmall),
                 const SizedBox(height: TSizes.spaceBtwItems / 2),
                 Text(
-                    'Adnan Menderes Caddesi Kayabasi Mah. No: 1 Basaksehir/Istanbul Turkey ',
+                    order.shippingAddress != null
+                        ? order.shippingAddress!.toString()
+                        : '',
                     style: Theme.of(context).textTheme.titleSmall),
               ],
             ),
@@ -117,11 +145,16 @@ class OrderCustomer extends StatelessWidget {
                 Text('Billing Address',
                     style: Theme.of(context).textTheme.headlineMedium),
                 const SizedBox(height: TSizes.spaceBtwSections),
-                Text('ISAM ELZOBI',
+                Text(
+                    order.billingAddressSameAsShipping
+                        ? order.shippingAddress!.name
+                        : order.billingAddress!.name,
                     style: Theme.of(context).textTheme.titleSmall),
                 const SizedBox(height: TSizes.spaceBtwItems / 2),
                 Text(
-                    'Adnan Menderes Caddesi Kayabasi Mah. No: 1 Basaksehir/Istanbul Turkey ',
+                    order.billingAddressSameAsShipping
+                        ? order.shippingAddress!.toString()
+                        : order.billingAddress!.toString(),
                     style: Theme.of(context).textTheme.titleSmall),
               ],
             ),

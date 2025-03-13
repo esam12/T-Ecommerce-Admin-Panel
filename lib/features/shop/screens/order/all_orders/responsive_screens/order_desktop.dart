@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/appbar/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/data_table/table_header.dart';
+import 'package:t_ecommerce_admin_panel/common/widgets/loaders/loader_animation.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/controllers/order/order_controller.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/order/all_orders/table/data_table.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
 
@@ -10,29 +13,35 @@ class OrderDesktopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    final controller = Get.put(OrderController());
+    return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(TSizes.defaultSpace),
+          padding: const EdgeInsets.all(TSizes.defaultSpace),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Breadcrumbs
-              TBreadcrumbWithHeading(
+              const TBreadcrumbWithHeading(
                 heading: 'Orders',
                 breadcrumbItems: ['Orders'],
               ),
-              SizedBox(height: TSizes.spaceBtwSections),
-              
+              const SizedBox(height: TSizes.spaceBtwSections),
+
               // Table Body
               TRoundedContainer(
                 child: Column(
                   children: [
-                    TTableHeader(showLeftWidget: false),
-                    SizedBox(height: TSizes.spaceBtwItems),
+                    const TTableHeader(showLeftWidget: false),
+                    const SizedBox(height: TSizes.spaceBtwItems),
 
                     // Table
-                    OrderTable(),
+                    Obx(() {
+                      if (controller.isLoading.value) {
+                        return const TLoaderAnimation();
+                      }
+                      return const OrderTable();
+                    }),
                   ],
                 ),
               ),

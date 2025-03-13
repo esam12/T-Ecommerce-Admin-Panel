@@ -32,7 +32,11 @@ class OrderDesktopScreen extends StatelessWidget {
               TRoundedContainer(
                 child: Column(
                   children: [
-                    const TTableHeader(showLeftWidget: false),
+                    TTableHeader(
+                      showLeftWidget: false,
+                      searchController: controller.searchTextController,
+                      searchOnChanged: (query) => controller.searchItems(query),
+                    ),
                     const SizedBox(height: TSizes.spaceBtwItems),
 
                     // Table

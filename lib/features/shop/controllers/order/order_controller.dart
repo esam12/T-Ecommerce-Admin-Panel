@@ -41,19 +41,19 @@ class OrderController extends TBaseController<OrderModel> {
   /// Update Product Status
   Future<void> updateOrderStatus(
       OrderModel order, OrderStatus newStatus) async {
-        try {
-          statusLoader.value = true;
-          order.orderStatus = newStatus;
-          await _orderRepository.updateOrderSpecificValue(
-              order.docId, {'orderStatus': newStatus.toString()});
-              updateItemFromLists(order);
-              orderStatus.value = newStatus;
-              TLoaders.successSnackBar(title: 'Updated', message: 'Order Status Updated');
-          
-        } catch (e) {
-          TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
-        } finally {
-          statusLoader.value = false;
-        }
-      }
+    try {
+      statusLoader.value = true;
+      order.orderStatus = newStatus;
+      await _orderRepository.updateOrderSpecificValue(
+          order.docId, {'orderStatus': newStatus.toString()});
+      updateItemFromLists(order);
+      orderStatus.value = newStatus;
+      TLoaders.successSnackBar(
+          title: 'Updated', message: 'Order Status Updated');
+    } catch (e) {
+      TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+    } finally {
+      statusLoader.value = false;
+    }
+  }
 }

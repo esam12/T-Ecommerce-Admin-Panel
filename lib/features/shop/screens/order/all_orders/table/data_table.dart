@@ -9,6 +9,7 @@ class OrderTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return TPaginatedDataTable(
       minWidth: 700,
       columns: [

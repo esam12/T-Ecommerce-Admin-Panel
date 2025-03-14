@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/appbar/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/data_table/table_header.dart';
+import 'package:t_ecommerce_admin_panel/common/widgets/loaders/loader_animation.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/controllers/customer/customer_controller.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/screens/customer/all_customers/table/data_table.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
@@ -38,7 +39,12 @@ class CustomerDesktopScreen extends StatelessWidget {
                     const SizedBox(height: TSizes.spaceBtwItems),
 
                     // Table
-                    const CustomerTable(),
+                    Obx(() {
+                      if (controller.isLoading.value) {
+                        return const TLoaderAnimation();
+                      }
+                     return const CustomerTable();
+                    }),
                   ],
                 ),
               ),

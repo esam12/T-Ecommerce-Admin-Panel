@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/appbar/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/data_table/table_header.dart';
+import 'package:t_ecommerce_admin_panel/common/widgets/loaders/loader_animation.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/controllers/customer/customer_controller.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/screens/customer/all_customers/table/data_table.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
 
 class CustomerMobileScreen extends StatelessWidget {
@@ -12,7 +14,7 @@ class CustomerMobileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(CustomerController());
-    return  Scaffold(
+    return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(TSizes.defaultSpace),
@@ -29,13 +31,20 @@ class CustomerMobileScreen extends StatelessWidget {
               TRoundedContainer(
                 child: Column(
                   children: [
-  TTableHeader(
+                    TTableHeader(
                       showLeftWidget: false,
                       searchController: controller.searchTextController,
                       searchOnChanged: (query) => controller.searchItems(query),
-                    ),                    const SizedBox(height: TSizes.spaceBtwItems),
+                    ),
+                    const SizedBox(height: TSizes.spaceBtwItems),
 
                     // Table
+                     Obx(() {
+                      if (controller.isLoading.value) {
+                        return const TLoaderAnimation();
+                      }
+                     return const CustomerTable();
+                    }),
                   ],
                 ),
               ),

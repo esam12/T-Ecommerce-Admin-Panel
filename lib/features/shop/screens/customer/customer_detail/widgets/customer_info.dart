@@ -26,11 +26,11 @@ class CustomerInfo extends StatelessWidget {
           // Personal Information Card
           Row(
             children: [
-              const TRoundedImage(
+               TRoundedImage(
                 padding: 0,
                 backgroundColor: TColors.primaryBackground,
-                image: TImages.user,
-                imageType: ImageType.asset,
+                image: customer.profilePicture.isNotEmpty ? customer.profilePicture : TImages.user,
+                imageType: customer.profilePicture.isNotEmpty ? ImageType.network : ImageType.asset,
               ),
               const SizedBox(width: TSizes.spaceBtwItems),
               Expanded(
@@ -39,13 +39,13 @@ class CustomerInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'ISAM ELZOBI',
+                      customer.fullName,
                       style: Theme.of(context).textTheme.titleLarge,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
-                    const Text(
-                      'support@codingwithiso.com',
+                     Text(
+                      customer.email,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
@@ -66,7 +66,7 @@ class CustomerInfo extends StatelessWidget {
               const SizedBox(width: TSizes.spaceBtwItems / 2),
               Expanded(
                 child: Text(
-                  'iso',
+                  customer.userName,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
@@ -98,7 +98,7 @@ class CustomerInfo extends StatelessWidget {
               const SizedBox(width: TSizes.spaceBtwItems / 2),
               Expanded(
                 child: Text(
-                  '+90-537-702-11-08',
+                  customer.phoneNumber,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),

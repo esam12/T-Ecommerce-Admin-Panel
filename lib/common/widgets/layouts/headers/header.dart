@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/images/t_rounded_image.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/shimmers/shimmer.dart';
-import 'package:t_ecommerce_admin_panel/features/authentication/controllers/user_controller.dart';
+import 'package:t_ecommerce_admin_panel/features/personalization/controllers/user_controller.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/colors.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/image_strings.dart';
@@ -86,13 +86,13 @@ class THeader extends StatelessWidget implements PreferredSizeWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      userController.isLoading.value
+                      userController.loading.value
                           ? const TShimmerEffect(width: 50, height: 13)
                           : Text(
                               userController.user.value.fullName,
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
-                      userController.isLoading.value
+                      userController.loading.value
                           ? const TShimmerEffect(width: 50, height: 13)
                           : Text(
                               userController.user.value.email,

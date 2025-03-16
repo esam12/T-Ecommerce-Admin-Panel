@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/images/t_circular_image.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/layouts/sidebars/menu/menu_item.dart';
+import 'package:t_ecommerce_admin_panel/features/personalization/controllers/settings_controller.dart';
 import 'package:t_ecommerce_admin_panel/routes/routes.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/colors.dart';
+import 'package:t_ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/image_strings.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
 
@@ -25,11 +28,34 @@ class TSidebar extends StatelessWidget {
           child: Column(
             children: [
               // Image
-              const TCircularImage(
-                width: 100,
-                height: 100,
-                image: TImages.darkAppLogo,
-                backgroundColor: Colors.transparent,
+              Row(
+                children: [
+                  Obx(
+                    () => TCircularImage(
+                      width: 60,
+                      height: 60,
+                      padding: 0,
+                      imageType: SettingsController
+                              .instance.settings.value.appLogo.isNotEmpty
+                          ? ImageType.network
+                          : ImageType.asset,
+                      image: SettingsController
+                              .instance.settings.value.appLogo.isNotEmpty
+                          ? SettingsController.instance.settings.value.appLogo
+                          : TImages.darkAppLogo,
+                      backgroundColor: Colors.transparent,
+                    ),
+                  ),
+                  Expanded(
+                    child: Obx(
+                      () => Text(
+                        SettingsController.instance.settings.value.appName,
+                        style: Theme.of(context).textTheme.headlineLarge,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  )
+                ],
               ),
               const SizedBox(height: TSizes.spaceBtwSections),
               Padding(

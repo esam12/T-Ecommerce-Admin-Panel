@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:t_ecommerce_admin_panel/features/personalization/controllers/user_controller.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/sizes.dart';
 import 'package:t_ecommerce_admin_panel/utils/validators/validation.dart';
 
@@ -9,6 +11,11 @@ class ProfileForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = UserController.instance;
+    controller.firstNameController.text = controller.user.value.firstName;
+    controller.lastNameController.text = controller.user.value.lastName;
+    controller.phoneController.text = controller.user.value.phoneNumber;
+
     return Column(
       children: [
         TRoundedContainer(
@@ -23,6 +30,7 @@ class ProfileForm extends StatelessWidget {
 
               // First and Last Name
               Form(
+                key: controller.formKey,
                 child: Column(
                   children: [
                     Row(
@@ -30,6 +38,7 @@ class ProfileForm extends StatelessWidget {
                         // First Name
                         Expanded(
                           child: TextFormField(
+                            controller: controller.firstNameController,
                             decoration: const InputDecoration(
                               hintText: 'First Name',
                               labelText: 'First Name',
@@ -46,6 +55,7 @@ class ProfileForm extends StatelessWidget {
                         // Last Name
                         Expanded(
                           child: TextFormField(
+                            controller: controller.lastNameController,
                             decoration: const InputDecoration(
                               hintText: 'Last Name',
                               labelText: 'Last Name',
@@ -81,6 +91,7 @@ class ProfileForm extends StatelessWidget {
                         // Phone
                         Expanded(
                           child: TextFormField(
+                            controller: controller.phoneController,
                             decoration: const InputDecoration(
                               hintText: 'Phone Number',
                               labelText: 'Phone Number',
@@ -102,9 +113,17 @@ class ProfileForm extends StatelessWidget {
               // Update Button
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Update Profile'),
+                child: Obx(
+                  () => ElevatedButton(
+                    onPressed: () => controller.loading.value
+                        ? () {}
+                        : controller.updateUserInformation(),
+                    child: controller.loading.value
+                        ? const CircularProgressIndicator(
+                            color: Colors.white,
+                          )
+                        : const Text('Update Profile'),
+                  ),
                 ),
               )
             ],

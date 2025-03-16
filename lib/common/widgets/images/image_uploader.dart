@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:t_ecommerce_admin_panel/common/widgets/containers/circular_container.dart';
 
 import '../../../../../../common/widgets/icons/t_circular_icon.dart';
 import '../../../../../../common/widgets/images/t_circular_image.dart';
@@ -12,21 +13,24 @@ import 't_rounded_image.dart';
 
 /// Widget for uploading images with optional editing functionality
 class TImageUploader extends StatelessWidget {
-  const TImageUploader({
-    super.key,
-    this.image,
-    this.onIconButtonPressed,
-    this.memoryImage,
-    this.width = 100,
-    this.height = 100,
-    required this.imageType,
-    this.circular = false,
-    this.icon = Iconsax.edit_2,
-    this.top,
-    this.bottom = 0,
-    this.right,
-    this.left = 0,
-  });
+  const TImageUploader(
+      {super.key,
+      this.image,
+      this.onIconButtonPressed,
+      this.memoryImage,
+      this.width = 100,
+      this.height = 100,
+      required this.imageType,
+      this.circular = false,
+      this.icon = Iconsax.edit_2,
+      this.top,
+      this.bottom = 0,
+      this.right,
+      this.left = 0,
+      this.loading = false});
+
+  /// Whether to display the loading instead of icon
+  final bool loading;
 
   /// Whether to display the image in a circular shape
   final bool circular;
@@ -92,13 +96,23 @@ class TImageUploader extends StatelessWidget {
           left: left,
           right: right,
           bottom: bottom,
-          child: TCircularIcon(
-            icon: icon,
-            size: TSizes.md,
-            color: Colors.white,
-            onPressed: onIconButtonPressed,
-            backgroundColor: TColors.primary.withOpacity(0.9),
-          ),
+          child: loading
+              ? const TCircularContainer(
+                  width: TSizes.xl,
+                  height: TSizes.xl,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    backgroundColor: TColors.primary,
+                    color: TColors.white,
+                  ),
+                )
+              : TCircularIcon(
+                  icon: icon,
+                  size: TSizes.md,
+                  color: Colors.white,
+                  onPressed: onIconButtonPressed,
+                  backgroundColor: TColors.primary.withOpacity(0.9),
+                ),
         )
       ],
     );

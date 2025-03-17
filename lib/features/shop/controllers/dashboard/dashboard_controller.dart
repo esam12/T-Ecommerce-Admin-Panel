@@ -1,117 +1,40 @@
 import 'package:get/get.dart';
-import 'package:t_ecommerce_admin_panel/features/shop/models/cart_model.dart';
+import 'package:t_ecommerce_admin_panel/data/abstract/base_data_table_controller.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/controllers/customer/customer_controller.dart';
+import 'package:t_ecommerce_admin_panel/features/shop/controllers/order/order_controller.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/models/order_model.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/enums.dart';
 import 'package:t_ecommerce_admin_panel/utils/helpers/helper_functions.dart';
 
-class DashboardController extends GetxController {
+class DashboardController extends TBaseController<OrderModel> {
   static DashboardController get instance => Get.find();
 
+  final orderController = Get.put(OrderController());
+  final customerController = Get.put(CustomerController());
+
   final RxList<double> weeklySales = <double>[].obs;
-
   final RxMap<OrderStatus, int> orderStatusData = <OrderStatus, int>{}.obs;
-  final RxMap<OrderStatus, double> orderStatusAmount =
-      <OrderStatus, double>{}.obs;
-
-  /// -- Order
-  static final List<OrderModel> orders = [
-    OrderModel(
-      id: 'CS-0001',
-      orderStatus: OrderStatus.processing,
-      totalAmount: 256,
-      orderDate: DateTime(2024, 10, 29),
-      deliveryDate: DateTime(2024, 11, 25),
-      items: [
-        CartItemModel(
-            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
-        CartItemModel(
-            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
-        CartItemModel(
-            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
-      ],
-    ),
-    OrderModel(
-      id: 'CS-0002',
-      orderStatus: OrderStatus.pending,
-      totalAmount: 75,
-      orderDate: DateTime(2024, 11, 01),
-      deliveryDate: DateTime(2024, 11, 21),
-      items: [
-        CartItemModel(
-            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
-        CartItemModel(
-            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
-        CartItemModel(
-            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
-      ],
-    ),
-    OrderModel(
-      id: 'CS-0003',
-      orderStatus: OrderStatus.pending,
-      totalAmount: 150,
-      orderDate: DateTime(2024, 10, 31),
-      deliveryDate: DateTime(2024, 11, 22),
-      items: [
-        CartItemModel(
-            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
-        CartItemModel(
-            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
-        CartItemModel(
-            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
-      ],
-    ),
-    OrderModel(
-      id: 'CS-0004',
-      orderStatus: OrderStatus.delivered,
-      totalAmount: 270,
-      orderDate: DateTime(2024, 11, 02),
-      deliveryDate: DateTime(2024, 11, 25),
-      items: [
-        CartItemModel(
-            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
-        CartItemModel(
-            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
-        CartItemModel(
-            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
-      ],
-    ),
-    OrderModel(
-      id: 'CS-0005',
-      orderStatus: OrderStatus.cancelled,
-      totalAmount: 325,
-      orderDate: DateTime(2024, 11, 03),
-      deliveryDate: DateTime(2024, 11, 25),
-      items: [
-        CartItemModel(
-            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
-        CartItemModel(
-            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
-        CartItemModel(
-            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
-      ],
-    ),
-    OrderModel(
-      id: 'CS-0006',
-      orderStatus: OrderStatus.shipped,
-      totalAmount: 150,
-      orderDate: DateTime(2024, 11, 04),
-      deliveryDate: DateTime(2024, 11, 26),
-      items: [
-        CartItemModel(
-            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
-        CartItemModel(
-            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
-        CartItemModel(
-            id: 'id', title: 'title', quantity: 5, price: 59, totalAmount: 100),
-      ],
-    ),
-  ];
+  final RxMap<OrderStatus, double> totalAmouts = <OrderStatus, double>{}.obs;
 
   @override
-  void onInit() {
+  Future<List<OrderModel>> fetchItems() async {
+    // Fetch Orders if empty
+    if (orderController.allItems.isEmpty) {
+      await orderController.fetchItems();
+    }
+
+    // Fetch Customer if empty
+    if (customerController.allItems.isEmpty) {
+      await customerController.fetchItems();
+    }
+
+    // Calculate weekly sales
     _calculateWeeklySales();
-    _calculateOrderStatusDate();
-    super.onInit();
+
+    // Calculate order status counts
+    _calculateOrderStatusData();
+
+    return orderController.allItems;
   }
 
   // Calculates weekly sales
@@ -119,7 +42,7 @@ class DashboardController extends GetxController {
     // Reset weeklySales to zeros
     weeklySales.value = List<double>.filled(7, 0.0);
 
-    for (var order in orders) {
+    for (var order in orderController.allItems) {
       final DateTime orderWeekStart =
           THelperFunctions.getStartOfWeek(order.orderDate);
 
@@ -137,23 +60,20 @@ class DashboardController extends GetxController {
   }
 
   /// Call this function to Calculate order status counts
-  void _calculateOrderStatusDate() {
+  void _calculateOrderStatusData() {
     // Reset status data
     orderStatusData.clear();
 
     // Map to store total amounts for each status
-    orderStatusAmount.value = {
-      for (var status in OrderStatus.values) status: 0.0
-    };
+    totalAmouts.value = {for (var status in OrderStatus.values) status: 0.0};
 
-    for (var order in orders) {
+    for (var order in orderController.allItems) {
       // Count Orders
       final status = order.orderStatus;
       orderStatusData[status] = (orderStatusData[status] ?? 0) + 1;
 
       // Calculate total amount for each status
-      orderStatusAmount[status] =
-          (orderStatusAmount[status] ?? 0) + order.totalAmount;
+      totalAmouts[status] = (totalAmouts[status] ?? 0) + order.totalAmount;
     }
   }
 
@@ -171,4 +91,10 @@ class DashboardController extends GetxController {
         return 'Cancelled';
     }
   }
+
+  @override
+  bool containSearchQuery(OrderModel item, String query) => false;
+
+  @override
+  Future<void> deleteItem(OrderModel item) async {}
 }

@@ -1,7 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/circular_container.dart';
 import 'package:t_ecommerce_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:t_ecommerce_admin_panel/common/widgets/loaders/loader_animation.dart';
 import 'package:t_ecommerce_admin_panel/features/shop/controllers/dashboard/dashboard_controller.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/colors.dart';
 import 'package:t_ecommerce_admin_panel/utils/constants/enums.dart';
@@ -25,74 +27,88 @@ class OrderStatusPieChart extends StatelessWidget {
           const SizedBox(height: TSizes.spaceBtwSections),
 
           // Graph
-          SizedBox(
-            height: 400,
-            child: PieChart(
-              PieChartData(
-                sections: controller.orderStatusData.entries.map((entry) {
-                  final status = entry.key;
-                  final count = entry.value;
-                  return PieChartSectionData(
-                    title: count.toString(),
-                    value: count.toDouble(),
-                    radius: 100,
-                    color: THelperFunctions.getOrderStatusColor(status),
-                    titleStyle: const TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                      color: TColors.white,
+          Obx(
+            () => controller.orderStatusData.isNotEmpty
+                ? SizedBox(
+                    height: 400,
+                    child: PieChart(
+                      PieChartData(
+                        sections:
+                            controller.orderStatusData.entries.map((entry) {
+                          final status = entry.key;
+                          final count = entry.value;
+                          return PieChartSectionData(
+                            title: count.toString(),
+                            value: count.toDouble(),
+                            radius: 100,
+                            color: THelperFunctions.getOrderStatusColor(status),
+                            titleStyle: const TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                              color: TColors.white,
+                            ),
+                          );
+                        }).toList(),
+                        pieTouchData: PieTouchData(
+                          touchCallback:
+                              (FlTouchEvent event, pieTouchResponse) {
+                            // Handle touch events here if needed
+                          },
+                          enabled: true,
+                        ),
+                      ),
                     ),
-                  );
-                }).toList(),
-                pieTouchData: PieTouchData(
-                  touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                    // Handle touch events here if needed
-                  },
-                  enabled: true,
-                ),
-              ),
-            ),
+                  )
+                : const SizedBox(
+                    height: 400,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [TLoaderAnimation()],
+                    ),
+                  ),
           ),
 
           // Show status and color meta
           SizedBox(
             width: double.infinity,
-            child: DataTable(
-              columns: const [
-                DataColumn(label: Text('Status')),
-                DataColumn(label: Text('Orders')),
-                DataColumn(label: Text('Total')),
-              ],
-              rows: controller.orderStatusData.entries.map((entry) {
-                final OrderStatus status = entry.key;
-                final int count = entry.value;
-                final totalAmount = controller.orderStatusAmount[status] ?? 0.0;
-                return DataRow(
-                  cells: [
-                    DataCell(
-                      Row(
-                        children: [
-                          TCircularContainer(
-                            width: 20,
-                            height: 20,
-                            backgroundColor:
-                                THelperFunctions.getOrderStatusColor(status),
-                          ),
-                          Expanded(
-                              child: Text(
-                                  ' ${controller.getDisplayStatusName(status)}'))
-                        ],
+            child: Obx(
+              () => DataTable(
+                columns: const [
+                  DataColumn(label: Text('Status')),
+                  DataColumn(label: Text('Orders')),
+                  DataColumn(label: Text('Total')),
+                ],
+                rows: controller.orderStatusData.entries.map((entry) {
+                  final OrderStatus status = entry.key;
+                  final int count = entry.value;
+                  final totalAmount = controller.totalAmouts[status] ?? 0.0;
+                  final String displayStatus =
+                      controller.getDisplayStatusName(status);
+                  return DataRow(
+                    cells: [
+                      DataCell(
+                        Row(
+                          children: [
+                            TCircularContainer(
+                              width: 20,
+                              height: 20,
+                              backgroundColor:
+                                  THelperFunctions.getOrderStatusColor(status),
+                            ),
+                            Expanded(child: Text(' $displayStatus'))
+                          ],
+                        ),
                       ),
-                    ),
-                    DataCell(Text(count.toString())),
-                    DataCell(
-                      Text(
-                        '\$${totalAmount.toStringAsFixed(2)}',
+                      DataCell(Text(count.toString())),
+                      DataCell(
+                        Text(
+                          '\$${totalAmount.toStringAsFixed(2)}',
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              }).toList(),
+                    ],
+                  );
+                }).toList(),
+              ),
             ),
           )
         ],

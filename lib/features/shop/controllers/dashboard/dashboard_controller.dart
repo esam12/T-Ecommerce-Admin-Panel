@@ -70,6 +70,7 @@ class DashboardController extends TBaseController<OrderModel> {
     for (var order in orderController.allItems) {
       // Count Orders
       final status = order.orderStatus;
+      print('Parsed order status: ${status}');
       orderStatusData[status] = (orderStatusData[status] ?? 0) + 1;
 
       // Calculate total amount for each status

@@ -108,6 +108,7 @@ class DashboardDesktop extends StatelessWidget {
                         /// Orders
                         TRoundedContainer(
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 'Recent Orders',

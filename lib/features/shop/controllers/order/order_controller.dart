@@ -48,8 +48,10 @@ class OrderController extends TBaseController<OrderModel> {
           order.docId, {'orderStatus': newStatus.toString()});
       updateItemFromLists(order);
       orderStatus.value = newStatus;
+      print('Order Status Updated ${orderStatus.value}');
       TLoaders.successSnackBar(
           title: 'Updated', message: 'Order Status Updated');
+      update();
     } catch (e) {
       TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     } finally {

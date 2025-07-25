@@ -15,7 +15,7 @@ class CustomerOrders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = CustomerDetailController.instance;
+    final controller = Get.put(CustomerDetailController());
     controller.getCustomerAddresses();
 
     return Obx(
@@ -24,11 +24,12 @@ class CustomerOrders extends StatelessWidget {
           return const TLoaderAnimation();
         }
         if (controller.allCustomerOrders.isEmpty) {
-          return  TAnimationLoaderWidget(
+          return TAnimationLoaderWidget(
               text: 'No Orders Found', animation: TImages.emptyAnimation);
         }
 
-        final totalAmount = controller.allCustomerOrders.fold(0.0, (previousValue, element) => previousValue + element.totalAmount);
+        final totalAmount = controller.allCustomerOrders.fold(0.0,
+            (previousValue, element) => previousValue + element.totalAmount);
 
         return TRoundedContainer(
           padding: const EdgeInsets.all(TSizes.defaultSpace),
@@ -52,7 +53,8 @@ class CustomerOrders extends StatelessWidget {
                               .apply(color: TColors.primary),
                         ),
                         TextSpan(
-                          text: ' on ${controller.allCustomerOrders.length} Orders',
+                          text:
+                              ' on ${controller.allCustomerOrders.length} Orders',
                           style: Theme.of(context).textTheme.bodyLarge,
                         )
                       ],

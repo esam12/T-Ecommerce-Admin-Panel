@@ -40,30 +40,30 @@ class AddressModel {
       );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'phoneNumber': phoneNumber,
-        'street': street,
-        'city': city,
-        'state': state,
-        'country': country,
-        'postalCode': postalCode,
-        'dateTime': DateTime.now(),
-        'selectedAddress': selectedAddress,
+        'Id': id,
+        'Name': name,
+        'PhoneNumber': phoneNumber,
+        'Street': street,
+        'City': city,
+        'State': state,
+        'Country': country,
+        'PostalCode': postalCode,
+        'DateTime': DateTime.now(),
+        'SelectedAddress': selectedAddress,
       };
 
   factory AddressModel.fromMap(Map<String, dynamic> data) {
     return AddressModel(
-      id: data['id'] as String,
-      name: data['name'] as String,
-      phoneNumber: data['phoneNumber'] as String,
-      street: data['street'] as String,
-      city: data['city'] as String,
-      state: data['state'] as String,
-      country: data['country'] as String,
-      postalCode: data['postalCode'] as String,
-      selectedAddress: data['selectedAddress'] as bool,
-      dateTime: (data['dateTime'] as Timestamp).toDate(),
+      id: data['Id'] as String,
+      name: data['Name'] as String,
+      phoneNumber: data['PhoneNumber'] as String,
+      street: data['Street'] as String,
+      city: data['City'] as String,
+      state: data['State'] as String,
+      country: data['Country'] as String,
+      postalCode: data['PostalCode'] as String,
+      selectedAddress: data['SelectedAddress'] as bool,
+      dateTime: (data['DateTime'] as Timestamp).toDate(),
     );
   }
 
@@ -73,15 +73,15 @@ class AddressModel {
 
     return AddressModel(
       id: snapshot.id,
-      name: data['name'] ?? '',
-      phoneNumber: data['phoneNumber'] ?? '',
-      street: data['street'] ?? '',
-      city: data['city'] ?? '',
-      state: data['state'] ?? '',
-      country: data['country'] ?? '',
-      postalCode: data['postalCode'] ?? '',
-      selectedAddress: data['selectedAddress'] as bool,
-      dateTime: (data['dateTime'] as Timestamp?)?.toDate(),
+      name: data['Name'] ?? '',
+      phoneNumber: data['PhoneNumber'] ?? '',
+      street: data['Street'] ?? '',
+      city: data['City'] ?? '',
+      state: data['State'] ?? '',
+      country: data['Country'] ?? '',
+      postalCode: data['PostalCode'] ?? '',
+      selectedAddress: data['SelectedAddress'] as bool,
+      dateTime: (data['DateTime'] as Timestamp?)?.toDate(),
     );
   }
 

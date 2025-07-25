@@ -37,6 +37,7 @@ class OrderStatusPieChart extends StatelessWidget {
                             controller.orderStatusData.entries.map((entry) {
                           final status = entry.key;
                           final count = entry.value;
+                          print(status);
                           return PieChartSectionData(
                             title: count.toString(),
                             value: count.toDouble(),

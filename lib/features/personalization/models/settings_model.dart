@@ -35,12 +35,12 @@ class SettingsModel {
       final data = document.data()!;
       return SettingsModel(
         id: document.id,
-        taxRate: (data['taxRate'] as num?)?.toDouble() ?? 0.0,
-        shippingCost: (data['shippingCost'] as num?)?.toDouble() ?? 0.0,
+        taxRate: (data['TaxRate'] as num?)?.toDouble() ?? 0.0,
+        shippingCost: (data['ShippingCost'] as num?)?.toDouble() ?? 0.0,
         freeShippingThreshold:
-            (data['freeShippingThreshold'] as num?)?.toDouble(),
-        appName: data.containsKey('appName') ? data['appName'] ?? '' : '',
-        appLogo: data.containsKey('appLogo') ? data['appLogo'] ?? '' : '',
+            (data['FreeShippingThreshold'] as num?)?.toDouble(),
+        appName: data.containsKey('AppName') ? data['AppName'] ?? '' : '',
+        appLogo: data.containsKey('AppLogo') ? data['AppLogo'] ?? '' : '',
       );
     } else {
       return SettingsModel();
